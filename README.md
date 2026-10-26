@@ -62,7 +62,7 @@ Tags: `V` vegetarian, `VG` vegan (also add `V`), `GF` gluten-free.
 The site ships with illustrated placeholders (`src/components/Art.astro`) instead of stock photos. To use your own:
 
 1. Put images in `public/images/` (e.g. `public/images/rigatoni.jpg`).
-2. Add `"image": "/images/rigatoni.jpg"` handling by passing `src` to `<Art>`: in `DishCard.astro`, `menu.astro`, `gallery.astro` etc., change `<Art kind=… />` to `<Art src={dish.image} alt={dish.name} kind=… />`. When `src` is set the illustration is skipped and a lazy-loaded `<img>` is rendered.
+2. Add an `"image": "/images/rigatoni.jpg"` field to the item in its JSON file, then in `DishCard.astro`, `menu.astro`, `gallery.astro` etc. change `<Art kind=… />` to `<Art src={dish.image} alt={dish.name} kind=… />`. When `src` is set the illustration is skipped and a lazy-loaded `<img>` is rendered.
 3. Replace `public/og.png` (1200×630) with your own social-share image.
 
 ## Brand tweaks
