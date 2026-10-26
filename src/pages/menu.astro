@@ -1,0 +1,181 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Art from '../components/Art.astro';
+import menu from '../content/menu.json';
+import site from '../content/site.json';
+import { price } from '../lib/format';
+
+const total = menu.categories.reduce((n, c) => n + c.items.length, 0);
+const dietary = Object.entries(menu.dietaryKey);
+---
+
+<Base title="Menu" description={`Browse the ${site.name} menu: hand-rolled pasta, wood-fired pizza, antipasti, mains, desserts and natural wine. Vegetarian, vegan and gluten-free options marked.`}>
+  <PageHeader
+    eyebrow="The menu"
+    title="Come hungry. <em>Stay awhile.</em>"
+    lead="Seasonal, scratch-made and meant to be shared. Our menu changes with the market, so ask your server about tonight’s specials."
+    art={[{ kind: 'pasta', tone: 'terracotta' }, { kind: 'spritz', tone: 'gold' }, { kind: 'tiramisu', tone: 'cream' }]}
+  />
+
+  <div class="toolbar" data-menu-toolbar>
+    <div class="container bar">
+      <div class="tabs" role="group" aria-label="Menu categories">
+        <button type="button" class="tab is-active" data-cat="all" aria-pressed="true">All</button>
+        {menu.categories.map((c) => (<button type="button" class="tab" data-cat={c.id} aria-pressed="false">{c.title}</button>))}
+      </div>
+      <div class="diet" role="group" aria-label="Dietary filters">
+        {dietary.map(([k, label]) => (
+          <button type="button" class={`chip tag--${k}`} data-diet={k} aria-pressed="false" title={`Show only ${label.toLowerCase()} dishes`}>
+            <span class={`tag tag--${k}`}>{k}</span><span class="chip-l">{label}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <section class="section menu">
+    <div class="container">
+      <p class="count" role="status" aria-live="polite" data-count-msg>Showing all {total} dishes</p>
+
+      {menu.categories.map((c) => (
+        <section class="cat" id={c.id} data-cat-section={c.id}>
+          <header class="cat-head" data-reveal>
+            <h2 class="h2">{c.title}</h2>
+            <p class="muted">{c.blurb}</p>
+          </header>
+          <ul class="items" data-stagger="60">
+            {c.items.map((d: any) => (
+              <li class="item" data-tags={d.tags.join(' ')} data-reveal>
+                <div class="thumb"><Art kind={d.art.kind} tone={d.art.tone} alt={d.name} /></div>
+                <div class="info">
+                  <div class="line">
+                    <h3 class="name">{d.name}</h3>
+                    <span class="tags">{d.tags.map((t: string) => (<span class={`tag tag--${t}`} title={menu.dietaryKey[t as keyof typeof menu.dietaryKey]}>{t}</span>))}</span>
+                    <span class="leader" aria-hidden="true"></span>
+                    <span class="price">{price(d.price)}</span>
+                  </div>
+                  <p class="desc">{d.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+
+      <p class="empty" data-empty hidden>No dishes match those filters. Try clearing one. 🍝</p>
+
+      <aside class="note" data-reveal>
+        <p><strong>Good to know:</strong> {menu.note}</p>
+        <p class="legend">{dietary.map(([k, label]) => (<span><span class={`tag tag--${k}`}>{k}</span> {label}</span>))}</p>
+      </aside>
+
+      <div class="cta" data-reveal>
+        <h2 class="h2">Ready to eat?</h2>
+        <div class="btn-row">
+          <a class="btn" href="/reservations">Reserve a table <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href={site.links.order} target="_blank" rel="noopener">Order online</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const $$ = <T extends HTMLElement>(s: string) => Array.from(document.querySelectorAll<T>(s));
+  const tabs = $$('[data-cat]');
+  const chips = $$('[data-diet]');
+  const sections = $$('[data-cat-section]');
+  const items = $$('.item');
+  const msg = document.querySelector('[data-count-msg]')!;
+  const empty = document.querySelector<HTMLElement>('[data-empty]')!;
+  let cat = 'all';
+  const diet = new Set<string>();
+  const total = items.length;
+
+  const apply = (animate = true) => {
+    let shown = 0;
+    sections.forEach((sec) => {
+      const inCat = cat === 'all' || sec.dataset.catSection === cat;
+      let any = false;
+      sec.querySelectorAll<HTMLElement>('.item').forEach((it) => {
+        const tags = (it.dataset.tags ?? '').split(' ');
+        const ok = inCat && [...diet].every((d) => tags.includes(d));
+        it.hidden = !ok;
+        if (ok) {
+          any = true; shown++;
+          it.classList.add('is-visible');
+          if (animate) { it.classList.remove('pop'); void it.offsetWidth; it.classList.add('pop'); }
+        }
+      });
+      sec.hidden = !any;
+      if (any) sec.querySelector('[data-reveal]')?.classList.add('is-visible');
+    });
+    empty.hidden = shown > 0;
+    msg.textContent = shown === total ? `Showing all ${total} dishes` : `Showing ${shown} of ${total} dishes`;
+  };
+
+  tabs.forEach((t) => t.addEventListener('click', () => {
+    cat = t.dataset.cat!;
+    tabs.forEach((x) => { const on = x === t; x.classList.toggle('is-active', on); x.setAttribute('aria-pressed', String(on)); });
+    history.replaceState(null, '', cat === 'all' ? location.pathname : `#${cat}`);
+    apply();
+    if (window.scrollY > 500) document.querySelector('.menu')?.scrollIntoView({ behavior: 'smooth' });
+  }));
+  chips.forEach((c) => c.addEventListener('click', () => {
+    const k = c.dataset.diet!;
+    diet.has(k) ? diet.delete(k) : diet.add(k);
+    c.setAttribute('aria-pressed', String(diet.has(k)));
+    c.classList.toggle('is-active', diet.has(k));
+    apply();
+  }));
+
+  const hash = location.hash.slice(1);
+  if (hash && tabs.some((t) => t.dataset.cat === hash)) tabs.find((t) => t.dataset.cat === hash)!.click();
+</script>
+
+<style>
+  .toolbar { position: sticky; top: var(--nav-h); z-index: 50; background: rgb(246 239 227 / 0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line); transition: top 0.5s var(--ease); }
+  :global(body:has(.nav.is-hidden)) .toolbar { top: 0; }
+  .bar { display: flex; gap: 14px 28px; align-items: center; justify-content: space-between; flex-wrap: wrap; padding-block: 12px; }
+  .tabs { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 2px; margin-inline: -2px; max-width: 100%; }
+  .tabs::-webkit-scrollbar { display: none; }
+  .tab { white-space: nowrap; padding: 9px 18px; border-radius: 999px; border: 1.5px solid transparent; background: transparent; font-weight: 600; font-size: 0.92rem; color: var(--olive-800); transition: background 0.3s, color 0.3s, border-color 0.3s, transform 0.3s var(--ease); }
+  .tab:hover { border-color: var(--olive-800); }
+  .tab.is-active { background: var(--olive-900); color: var(--cream); }
+  .tab:active { transform: scale(0.95); }
+  .diet { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { display: inline-flex; align-items: center; gap: 8px; padding: 5px 14px 5px 6px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; font-size: 0.86rem; font-weight: 500; transition: all 0.3s var(--ease); }
+  .chip:hover { border-color: var(--olive-800); }
+  .chip.is-active { background: var(--olive-900); color: var(--cream); border-color: var(--olive-900); }
+  .chip .tag { pointer-events: none; }
+  @media (max-width: 640px) { .chip-l { display: none; } .chip { padding: 5px; } }
+
+  .menu { padding-top: clamp(40px, 6vw, 72px); }
+  .count { font-size: 0.9rem; color: var(--muted); margin-bottom: clamp(16px, 3vw, 32px); }
+  .cat { margin-bottom: clamp(56px, 8vw, 110px); }
+  .cat[hidden] { display: none; }
+  .cat-head { display: flex; align-items: baseline; gap: 12px 28px; flex-wrap: wrap; padding-bottom: 20px; margin-bottom: 8px; border-bottom: 2px solid var(--olive-900); }
+  .cat-head p { margin: 0; }
+  .items { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 clamp(32px, 6vw, 88px); }
+  .item { display: grid; grid-template-columns: 104px 1fr; gap: 20px; padding: 24px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .item[hidden] { display: none; }
+  .item.pop { animation: pop 0.6s var(--ease) both; }
+  @keyframes pop { from { opacity: 0; transform: translateY(18px) scale(0.97); } }
+  .thumb { width: 104px; height: 104px; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-soft); transition: transform 0.6s var(--ease), border-radius 0.6s var(--ease); }
+  .item:hover .thumb { transform: rotate(-4deg) scale(1.05); border-radius: 50%; }
+  .line { display: flex; align-items: baseline; gap: 10px; }
+  .name { font-size: 1.3rem; letter-spacing: -0.01em; line-height: 1.2; }
+  .tags { display: inline-flex; gap: 4px; transform: translateY(-2px); }
+  .leader { flex: 1; min-width: 12px; border-bottom: 2px dotted var(--cream-3); transform: translateY(-5px); }
+  .price { font-family: var(--font-display); font-size: 1.3rem; color: var(--tomato); font-weight: 500; }
+  .desc { margin: 8px 0 0; color: var(--muted); font-size: 0.98rem; max-width: 46ch; }
+  .empty { text-align: center; padding: 60px 0; font-size: 1.2rem; }
+  .note { margin-top: 24px; padding: 28px 32px; border-radius: var(--radius); background: var(--paper); border: 1px dashed var(--olive-500); }
+  .note p { margin: 0 0 10px; }
+  .legend { display: flex; gap: 8px 24px; flex-wrap: wrap; font-size: 0.9rem; margin: 0 !important; }
+  .legend > span { display: inline-flex; align-items: center; gap: 8px; }
+  .cta { text-align: center; margin-top: clamp(56px, 8vw, 100px); display: grid; gap: 24px; justify-items: center; }
+  @media (max-width: 900px) { .items { grid-template-columns: 1fr; } }
+  @media (max-width: 440px) { .item { grid-template-columns: 76px 1fr; gap: 14px; } .thumb { width: 76px; height: 76px; border-radius: 16px; } .name { font-size: 1.12rem; } .line { flex-wrap: wrap; } .leader { display: none; } .price { margin-left: auto; } }
+</style>

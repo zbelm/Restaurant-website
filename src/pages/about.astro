@@ -1,0 +1,118 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Art from '../components/Art.astro';
+import gallery from '../content/gallery.json';
+
+const values = [
+  { n: '01', title: 'Made by hand', text: 'Pasta is rolled every morning, dough rests for 48 hours, and nothing arrives at your table from a bag or a box.' },
+  { n: '02', title: 'Seasonal, always', text: 'We cook what’s good right now from farms within 100 miles. The menu changes when the market does.' },
+  { n: '03', title: 'Hospitality first', text: 'Great food is only half of it. We want you to feel like the room was waiting for you specifically.' },
+];
+const team = [
+  { name: 'Lucia Ferraro', role: 'Executive Chef', bio: 'Trained in Bologna, obsessed with ragù. Believes salt is a love language.', art: { kind: 'pasta', tone: 'terracotta' } },
+  { name: 'Marco Bellini', role: 'Head of Pasta & Pizza', bio: 'Our dough whisperer. Has opinions about hydration and will share them.', art: { kind: 'dough', tone: 'gold' } },
+  { name: 'Ava Chen', role: 'Beverage Director', bio: 'Curates our natural wine list and invents spritzes that disappear fast.', art: { kind: 'wine', tone: 'night' } },
+];
+const timeline = [
+  { year: '2017', text: 'A borrowed oven, a rolling pin and a pop-up in a friend’s garage.' },
+  { year: '2019', text: 'Zippies opens on Marigold Lane with twelve tables and one very loud espresso machine.' },
+  { year: '2022', text: 'The wood-fired oven arrives. Pizza night becomes a neighborhood tradition.' },
+  { year: 'Today', text: 'Still rolling by hand. Still a little mischievous.' },
+];
+---
+
+<Base title="Our Story" description="Meet the team behind Zippies: a modern Italian restaurant built on hand-rolled pasta, seasonal ingredients and a lot of heart.">
+  <PageHeader eyebrow="Our story" title="Italian cooking, <em>with a wink.</em>" lead="Zippies is a love letter to the way Italians eat: slowly, generously and together. Just with a few more cocktails." art={[{ kind: 'dough', tone: 'gold' }, { kind: 'interior', tone: 'night' }]} />
+
+  <section class="section">
+    <div class="container intro">
+      <div class="intro-copy">
+        <h2 class="h2 split">How a rolling pin became a <em>restaurant.</em></h2>
+        <p class="lead" data-reveal>It started small: a pasta night for friends that kept getting bigger. Within a year there was a line down the block and a landlord politely asking us to stop blocking the driveway.</p>
+        <p class="muted" data-reveal>So we found a proper home. We kept the rolling pins, the long communal tables and the habit of saying yes to one more plate. Today our team still makes everything from scratch, from the pasta and bread to the gelato, and we still believe dinner should feel like a party you’re glad you didn’t skip.</p>
+      </div>
+      <ol class="timeline" data-stagger="120">
+        {timeline.map((t) => (<li data-reveal><b>{t.year}</b><span>{t.text}</span></li>))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section on-dark grain values">
+    <div class="container">
+      <div class="section-head"><p class="eyebrow" data-reveal>What we believe</p><h2 class="h2 split">Three simple <em>rules.</em></h2></div>
+      <div class="v-grid" data-stagger="130">
+        {values.map((v) => (
+          <article class="v" data-reveal><span class="num">{v.n}</span><h3 class="h3">{v.title}</h3><p class="muted">{v.text}</p></article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section team">
+    <div class="container">
+      <div class="section-head center"><p class="eyebrow" data-reveal>The people</p><h2 class="h2 split">Meet the <em>crew.</em></h2></div>
+      <div class="t-grid" data-stagger="130">
+        {team.map((m) => (
+          <article class="member" data-reveal>
+            <div class="avatar"><Art kind={m.art.kind} tone={m.art.tone as any} alt={`Illustration representing ${m.name}`} /></div>
+            <h3 class="h3">{m.name}</h3>
+            <p class="role">{m.role}</p>
+            <p class="muted">{m.bio}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="strip" aria-label="A glimpse of Zippies">
+    <div class="strip-track">
+      {[...gallery, ...gallery].map((g, i) => (<div class="tile" aria-hidden={i >= gallery.length ? 'true' : undefined}><Art kind={g.kind} tone={g.tone as any} alt={i < gallery.length ? g.caption : ''} /></div>))}
+    </div>
+  </section>
+
+  <section class="section--tight cta">
+    <div class="container center" data-reveal>
+      <h2 class="h2">Pull up a chair.</h2>
+      <p class="lead muted center">We saved you a seat.</p>
+      <div class="btn-row" style="justify-content:center"><a class="btn" href="/reservations">Reserve a table <span class="arrow" aria-hidden="true">→</span></a><a class="btn btn--ghost" href="/menu">Browse the menu</a></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .intro { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(40px, 8vw, 110px); align-items: start; }
+  .intro-copy .h2 { margin-bottom: 28px; }
+  .intro-copy .lead { margin-bottom: 20px; }
+  .timeline { position: relative; display: grid; gap: 30px; padding-left: 34px; margin-top: 8px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px; width: 2px; background: linear-gradient(var(--tomato), var(--gold)); }
+  .timeline li { position: relative; display: grid; gap: 4px; }
+  .timeline li::before { content: ''; position: absolute; left: -34px; top: 8px; width: 16px; height: 16px; border-radius: 50%; background: var(--cream); border: 3px solid var(--tomato); }
+  .timeline b { font-family: var(--font-display); font-size: 1.8rem; font-weight: 500; color: var(--tomato); line-height: 1.1; }
+  .timeline span { color: var(--muted); }
+  @media (max-width: 860px) { .intro { grid-template-columns: 1fr; } }
+
+  .v-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.4vw, 32px); }
+  .v { padding: clamp(28px, 3vw, 44px); border-radius: var(--radius-lg); border: 1px solid rgb(246 239 227 / 0.16); background: rgb(246 239 227 / 0.05); transition: transform 0.6s var(--ease), background 0.4s, border-color 0.4s; display: grid; gap: 14px; align-content: start; }
+  .v:hover { background: rgb(246 239 227 / 0.1); border-color: var(--gold); }
+  .num { font-family: var(--font-display); font-style: italic; font-size: 3.4rem; color: var(--gold); line-height: 1; }
+  .v p { margin: 0; }
+  @media (max-width: 860px) { .v-grid { grid-template-columns: 1fr; } }
+
+  .t-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 3vw, 44px); }
+  .member { text-align: center; }
+  .avatar { width: min(100%, 300px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; margin: 0 auto 26px; box-shadow: var(--shadow-lift); transition: transform 0.7s var(--ease), border-radius 0.7s var(--ease); }
+  .member:hover .avatar { transform: rotate(-5deg) scale(1.04); border-radius: 42% 58% 55% 45% / 55% 45% 55% 45%; }
+  .role { color: var(--tomato); font-weight: 600; font-size: 0.82rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 6px 0 12px; }
+  .member .muted { max-width: 34ch; margin-inline: auto; }
+  @media (max-width: 860px) { .t-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+  .strip { overflow: hidden; padding: 10px 0 clamp(40px, 6vw, 90px); }
+  .strip-track { display: flex; gap: 16px; width: max-content; animation: slide 60s linear infinite; }
+  .strip:hover .strip-track { animation-play-state: paused; }
+  .tile { width: clamp(180px, 22vw, 300px); aspect-ratio: 4 / 5; border-radius: 26px; overflow: hidden; flex-shrink: 0; transition: transform 0.6s var(--ease); }
+  .tile:nth-child(even) { margin-top: 36px; }
+  .tile:hover { transform: translateY(-8px) rotate(-1.5deg); }
+  @keyframes slide { to { transform: translateX(calc(-50% - 8px)); } }
+  .cta .container { display: grid; gap: 20px; justify-items: center; }
+</style>

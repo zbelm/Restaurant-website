@@ -48,13 +48,13 @@ const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.0
   </section>
 
   <!-- ═════════ MARQUEE ═════════ -->
-  <div class="marquee" aria-hidden="true">
+  <div class="marquee-wrap" aria-hidden="true"><div class="marquee">
     <div class="track">
       {[0, 1].map(() => (
         <ul>{marquee.map((m) => (<li>{m}<i>✺</i></li>))}</ul>
       ))}
     </div>
-  </div>
+  </div></div>
 
   <!-- ═════════ STORY ═════════ -->
   <section class="section story">
@@ -204,7 +204,8 @@ const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.0
   }
 
   /* MARQUEE */
-  .marquee { background: var(--tomato); color: #fff; overflow: hidden; padding: 18px 0; transform: rotate(-1.2deg) scale(1.03); margin: -18px 0 -10px; position: relative; z-index: 2; box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.4); }
+  .marquee-wrap { overflow: hidden; padding: 18px 0; margin: -18px 0 -10px; position: relative; z-index: 2; }
+  .marquee { background: var(--tomato); color: #fff; overflow: hidden; padding: 18px 0; transform: rotate(-1.2deg) scale(1.03); box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.4); }
   .track { display: flex; width: max-content; animation: marquee 32s linear infinite; }
   .marquee:hover .track { animation-play-state: paused; }
   .track ul { display: flex; flex-shrink: 0; }

@@ -1,0 +1,103 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Art from '../components/Art.astro';
+import gallery from '../content/gallery.json';
+---
+
+<Base title="Gallery" description="A look inside Zippies: hand-rolled pasta, wood-fired pizza, natural wine and the dining room after dark.">
+  <PageHeader eyebrow="Gallery" title="A peek <em>inside.</em>" lead="Tap any picture to see it bigger. Swap these placeholders for your own photography in src/content/gallery.json." art={[{ kind: 'pizza', tone: 'olive' }, { kind: 'gelato', tone: 'gold' }]} />
+
+  <section class="section">
+    <div class="container">
+      <ul class="masonry" data-stagger="70">
+        {gallery.map((g, i) => (
+          <li class={`cell ${g.size}`} data-reveal="scale">
+            <button type="button" class="open" data-index={i} aria-label={`Open image: ${g.caption}`}>
+              <Art kind={g.kind} tone={g.tone as any} alt={g.caption} />
+              <span class="cap">{g.caption}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <dialog class="lightbox" data-lightbox aria-label="Image viewer">
+    <button class="close" type="button" aria-label="Close" data-close>✕</button>
+    <button class="nav prev" type="button" aria-label="Previous image" data-prev>←</button>
+    <figure>
+      <div class="frame" data-frame></div>
+      <figcaption data-caption></figcaption>
+    </figure>
+    <button class="nav next" type="button" aria-label="Next image" data-next>→</button>
+    <p class="counter" data-counter aria-live="polite"></p>
+  </dialog>
+</Base>
+
+<script>
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+  const frame = dlg.querySelector<HTMLElement>('[data-frame]')!;
+  const cap = dlg.querySelector<HTMLElement>('[data-caption]')!;
+  const counter = dlg.querySelector<HTMLElement>('[data-counter]')!;
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.open'));
+  let i = 0;
+  let opener: HTMLElement | null = null;
+
+  const show = (n: number, dir = 0) => {
+    i = (n + buttons.length) % buttons.length;
+    const art = buttons[i].querySelector('.art')!.cloneNode(true) as HTMLElement;
+    frame.replaceChildren(art);
+    frame.classList.remove('swap-l', 'swap-r'); void frame.offsetWidth;
+    if (dir) frame.classList.add(dir > 0 ? 'swap-r' : 'swap-l');
+    cap.textContent = buttons[i].querySelector('.cap')!.textContent;
+    counter.textContent = `${i + 1} / ${buttons.length}`;
+  };
+  const open = (n: number, el: HTMLElement) => { opener = el; show(n); dlg.showModal(); document.body.style.overflow = 'hidden'; };
+  const close = () => dlg.close();
+
+  buttons.forEach((b, n) => b.addEventListener('click', () => open(n, b)));
+  dlg.querySelector('[data-close]')!.addEventListener('click', close);
+  dlg.querySelector('[data-prev]')!.addEventListener('click', () => show(i - 1, -1));
+  dlg.querySelector('[data-next]')!.addEventListener('click', () => show(i + 1, 1));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) close(); });
+  dlg.addEventListener('close', () => { document.body.style.overflow = ''; opener?.focus(); });
+  dlg.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') show(i + 1, 1);
+    if (e.key === 'ArrowLeft') show(i - 1, -1);
+  });
+  let x0 = 0;
+  dlg.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+  dlg.addEventListener('touchend', (e) => { const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) show(i + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); });
+</script>
+
+<style>
+  .masonry { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: clamp(140px, 17vw, 240px); gap: clamp(10px, 1.6vw, 20px); grid-auto-flow: dense; }
+  .cell { min-height: 0; }
+  .cell.wide { grid-column: span 2; } .cell.tall { grid-row: span 2; }
+  .open { position: relative; width: 100%; height: 100%; padding: 0; border: 0; border-radius: var(--radius); overflow: hidden; display: block; background: var(--cream-2); }
+  .open :global(.art svg) { transition: transform 0.9s var(--ease); }
+  .open:hover :global(.art svg), .open:focus-visible :global(.art svg) { transform: scale(1.12) rotate(1.5deg); }
+  .cap { position: absolute; inset: auto 0 0 0; padding: 40px 16px 14px; text-align: left; color: #fff; font-size: 0.92rem; font-weight: 500; background: linear-gradient(transparent, rgb(22 28 20 / 0.85)); transform: translateY(100%); transition: transform 0.5s var(--ease); z-index: 3; }
+  .open:hover .cap, .open:focus-visible .cap { transform: none; }
+  @media (hover: none) { .cap { transform: none; } }
+  @media (max-width: 900px) { .masonry { grid-template-columns: repeat(2, 1fr); } }
+
+  .lightbox { border: 0; padding: 0; background: transparent; width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; color: #fff; }
+  .lightbox::backdrop { background: rgb(14 18 12 / 0.92); backdrop-filter: blur(10px); }
+  .lightbox[open] { display: grid; place-items: center; animation: fade 0.35s var(--ease); }
+  .lightbox[open]::backdrop { animation: fade 0.35s var(--ease); }
+  @keyframes fade { from { opacity: 0; } }
+  figure { margin: 0; width: min(88vw, 900px); display: grid; gap: 16px; text-align: center; }
+  .frame { aspect-ratio: 4 / 3; max-height: 74dvh; width: 100%; border-radius: var(--radius); overflow: hidden; box-shadow: 0 40px 80px -20px #000; animation: zoom 0.5s var(--ease); }
+  .frame.swap-r { animation: from-r 0.5s var(--ease); } .frame.swap-l { animation: from-l 0.5s var(--ease); }
+  @keyframes zoom { from { opacity: 0; transform: scale(0.9); } }
+  @keyframes from-r { from { opacity: 0; transform: translateX(60px); } }
+  @keyframes from-l { from { opacity: 0; transform: translateX(-60px); } }
+  figcaption { font-family: var(--font-display); font-size: 1.3rem; }
+  .close, .nav { position: absolute; width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid rgb(255 255 255 / 0.4); background: rgb(255 255 255 / 0.08); color: #fff; font-size: 1.3rem; transition: background 0.3s, transform 0.3s var(--ease); z-index: 2; }
+  .close:hover, .nav:hover { background: #fff; color: var(--olive-900); transform: scale(1.08); }
+  .close { top: 20px; right: 20px; } .prev { left: 20px; top: 50%; margin-top: -26px; } .next { right: 20px; top: 50%; margin-top: -26px; }
+  .counter { position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; font-size: 0.85rem; opacity: 0.7; margin: 0; }
+  @media (max-width: 700px) { .prev, .next { top: auto; bottom: 16px; margin: 0; } .prev { left: 16px; } .next { right: 16px; } }
+</style>

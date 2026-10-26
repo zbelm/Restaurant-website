@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Art from '../components/Art.astro';
+import events from '../content/events.json';
+
+const perks = [
+  { n: '40', l: 'Seated guests' }, { n: '60', l: 'Standing reception' }, { n: '3', l: 'Set menus to choose from' },
+];
+---
+
+<Base title="Events & Private Dining" description="Weekly wine nights, pasta-making classes and private dining for up to 40 guests at Zippies. Book your next celebration with us.">
+  <PageHeader eyebrow="Events & private dining" title="Any reason is a <em>good reason.</em>" lead="Learn to roll pasta, sip something natural or take over the whole restaurant for your next celebration." art={[{ kind: 'wine', tone: 'night' }, { kind: 'dough', tone: 'gold' }]} />
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head"><p class="eyebrow" data-reveal>On the calendar</p><h2 class="h2 split">Regular <em>happenings.</em></h2></div>
+      <div class="e-grid" data-stagger="130">
+        {events.map((e) => (
+          <article class="ev" data-reveal>
+            <div class="ev-media"><Art kind={e.art.kind} tone={e.art.tone as any} alt={e.title} /></div>
+            <div class="ev-body">
+              <p class="when">{e.when} · {e.time}</p>
+              <h3 class="h3">{e.title}</h3>
+              <p class="muted">{e.description}</p>
+              <p class="cost">{e.price}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section private on-dark grain" id="private-dining">
+    <div class="container p-grid">
+      <div>
+        <p class="eyebrow" data-reveal>Private dining</p>
+        <h2 class="h2 split" style="margin: 18px 0 24px">Make the room <em>yours.</em></h2>
+        <p class="lead muted" data-reveal>Birthdays, rehearsal dinners, team dinners, big milestones. Our private room and full-restaurant buyouts come with a dedicated host and a menu built around your night.</p>
+        <ul class="perks" data-stagger="100">
+          {perks.map((p) => (<li data-reveal><strong>{p.n}</strong><span>{p.l}</span></li>))}
+        </ul>
+        <div class="btn-row" data-reveal>
+          <a class="btn btn--light" href="/contact?topic=private-dining#contact-form">Enquire about an event <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+      </div>
+      <div class="p-art" data-reveal="scale"><Art kind="interior" tone="night" alt="Warmly lit dining room set for a private event" /></div>
+    </div>
+  </section>
+
+  <section class="section--tight">
+    <div class="container catering" data-reveal>
+      <div><h2 class="h2">Catering <em>&amp; gift cards</em></h2><p class="muted">Feeding a crowd at home or the office? Ask about our catering trays and gift cards. We’ll sort you out.</p></div>
+      <a class="btn btn--ghost" href="/contact?topic=catering#contact-form">Get in touch <span class="arrow" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .e-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.4vw, 32px); }
+  .ev { background: var(--paper); border-radius: var(--radius-lg); padding: 12px; box-shadow: var(--shadow-soft); transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease), opacity 0.9s var(--ease); display: flex; flex-direction: column; }
+  .ev:hover { box-shadow: var(--shadow-lift); }
+  .ev-media { aspect-ratio: 16 / 11; border-radius: calc(var(--radius-lg) - 8px); overflow: hidden; }
+  .ev-media :global(.art svg) { transition: transform 0.9s var(--ease); }
+  .ev:hover .ev-media :global(.art svg) { transform: scale(1.1); }
+  .ev-body { padding: 22px 14px 14px; display: grid; gap: 10px; flex: 1; align-content: start; }
+  .when { margin: 0; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 600; color: var(--tomato); }
+  .ev-body p.muted { margin: 0; }
+  .cost { margin: 6px 0 0; font-family: var(--font-display); font-size: 1.15rem; border-top: 1px dashed var(--line); padding-top: 12px; }
+  @media (max-width: 960px) { .e-grid { grid-template-columns: 1fr; } .ev { flex-direction: row; } .ev-media { flex: 0 0 38%; aspect-ratio: auto; } }
+  @media (max-width: 560px) { .ev { flex-direction: column; } .ev-media { aspect-ratio: 16/10; } }
+
+  .p-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 7vw, 100px); align-items: center; }
+  .perks { display: grid; grid-template-columns: repeat(3, auto); gap: 24px; justify-content: start; margin: 36px 0; }
+  .perks strong { display: block; font-family: var(--font-display); font-size: clamp(2.4rem, 5vw, 3.6rem); color: var(--gold); line-height: 1; font-weight: 500; }
+  .perks span { font-size: 0.85rem; opacity: 0.8; }
+  .p-art { aspect-ratio: 4 / 5; border-radius: 999px 999px var(--radius-lg) var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lift); max-width: 480px; justify-self: center; width: 100%; }
+  @media (max-width: 860px) { .p-grid { grid-template-columns: 1fr; } .p-art { order: -1; max-width: 340px; } }
+  .catering { display: flex; justify-content: space-between; align-items: center; gap: 28px; flex-wrap: wrap; padding: clamp(28px, 4vw, 56px); border-radius: var(--radius-lg); border: 1.5px solid var(--olive-800); }
+  .catering p { margin: 10px 0 0; max-width: 52ch; }
+</style>
