@@ -1,0 +1,95 @@
+---
+import Logo from './Logo.astro';
+import site from '../content/site.json';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const links = [
+  { href: '/', label: 'Home' },
+  { href: '/menu', label: 'Menu' },
+  { href: '/about', label: 'Our Story' },
+  { href: '/events', label: 'Events' },
+  { href: '/gallery', label: 'Gallery' },
+  { href: '/contact', label: 'Contact' },
+];
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+---
+
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="nav" data-nav>
+  <div class="nav-inner container">
+    <a href="/" class="brand" aria-label={`${site.name} home`}><Logo /></a>
+
+    <nav class="links" aria-label="Primary">
+      {links.map((l) => (
+        <a href={l.href} class:list={['link', { active: isActive(l.href) }]} aria-current={isActive(l.href) ? 'page' : undefined}>
+          <span>{l.label}</span>
+        </a>
+      ))}
+    </nav>
+
+    <div class="actions">
+      <a class="btn btn--sm order" href={site.links.order} target="_blank" rel="noopener">Order Online</a>
+      <a class="btn btn--sm reserve" href="/reservations">Reserve</a>
+      <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-burger>
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="panel on-dark" id="mobile-menu" data-panel hidden>
+    <nav aria-label="Mobile">
+      <ul>
+        {links.map((l, i) => (
+          <li style={`--i:${i}`}><a href={l.href} class:list={{ active: isActive(l.href) }}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <div class="panel-foot" style={`--i:${links.length}`}>
+      <a class="btn btn--light" href="/reservations">Reserve a table</a>
+      <p class="muted">{site.address.street}<br />{site.address.city}, {site.address.region} · <a href={`tel:${site.contact.phoneHref}`}>{site.contact.phone}</a></p>
+    </div>
+  </div>
+</header>
+
+<style>
+  .nav { position: fixed; inset: 0 0 auto 0; z-index: 100; height: var(--nav-h); color: var(--cream); transition: transform 0.5s var(--ease), background 0.4s, color 0.4s, box-shadow 0.4s, backdrop-filter 0.4s; }
+  .nav.is-scrolled { background: rgb(246 239 227 / 0.88); backdrop-filter: saturate(1.4) blur(14px); -webkit-backdrop-filter: saturate(1.4) blur(14px); color: var(--olive-900); box-shadow: 0 1px 0 var(--line); }
+  .nav.is-hidden { transform: translateY(-100%); }
+  .nav.menu-open { color: var(--cream); background: transparent; box-shadow: none; backdrop-filter: none; transform: none; }
+  .nav-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; z-index: 2; }
+  .brand { text-decoration: none; }
+  .links { display: flex; gap: 6px; }
+  .link { position: relative; text-decoration: none; padding: 10px 14px; font-weight: 500; font-size: 0.96rem; border-radius: 999px; }
+  .link span { position: relative; }
+  .link span::after { content: ''; position: absolute; left: 0; right: 0; bottom: -4px; height: 1.5px; background: currentColor; transform: scaleX(0); transform-origin: right; transition: transform 0.4s var(--ease); }
+  .link:hover span::after, .link.active span::after { transform: scaleX(1); transform-origin: left; }
+  .actions { display: flex; align-items: center; gap: 10px; }
+  .order { --bg: transparent; --fg: currentColor; --bd: currentColor; box-shadow: none; }
+  .order::before { background: currentColor; }
+  .order:hover { --fg: var(--olive-900); }
+  .nav:not(.is-scrolled) .order:hover { --fg: var(--olive-900); }
+  .nav.is-scrolled .order:hover { --fg: var(--cream); }
+
+  .burger { display: none; width: 46px; height: 46px; border-radius: 50%; border: 1.5px solid currentColor; background: transparent; position: relative; color: inherit; }
+  .burger span { position: absolute; left: 13px; right: 13px; height: 1.8px; background: currentColor; border-radius: 2px; transition: transform 0.45s var(--ease), opacity 0.2s; }
+  .burger span:nth-child(1) { top: 16px; } .burger span:nth-child(2) { top: 22px; } .burger span:nth-child(3) { top: 28px; }
+  .burger[aria-expanded='true'] span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+  .burger[aria-expanded='true'] span:nth-child(2) { opacity: 0; }
+  .burger[aria-expanded='true'] span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+
+  .panel { position: fixed; inset: 0; z-index: 1; padding: calc(var(--nav-h) + 24px) var(--gutter) 32px; display: flex; flex-direction: column; justify-content: space-between; background: var(--olive-900); clip-path: circle(0% at calc(100% - 44px) 38px); transition: clip-path 0.7s var(--ease); overflow-y: auto; }
+  .panel[hidden] { display: flex; visibility: hidden; }
+  .panel.open { clip-path: circle(150% at calc(100% - 44px) 38px); visibility: visible; }
+  .panel ul { display: grid; gap: 4px; }
+  .panel li { opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+  .panel.open li, .panel.open .panel-foot { opacity: 1; transform: none; transition-delay: calc(0.18s + var(--i) * 60ms); }
+  .panel li a { display: block; font-family: var(--font-display); font-size: clamp(2.2rem, 9vw, 3.4rem); text-decoration: none; padding: 6px 0; letter-spacing: -0.03em; border-bottom: 1px solid rgb(246 239 227 / 0.12); }
+  .panel li a.active { font-style: italic; color: var(--gold); }
+  .panel-foot { display: grid; gap: 18px; margin-top: 28px; opacity: 0; transform: translateY(24px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+  .panel-foot p { margin: 0; font-size: 0.95rem; }
+
+  @media (max-width: 960px) {
+    .links, .order, .reserve { display: none; }
+    .burger { display: block; }
+  }
+</style>

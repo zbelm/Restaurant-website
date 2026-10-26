@@ -1,0 +1,18 @@
+---
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<span class:list={['logo', cls]} aria-label="Zippies">
+  <svg class="logo-mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+    <rect width="40" height="40" rx="12" fill="currentColor" opacity=".14"/>
+    <path d="M11 12h18L13 28h18" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="31" cy="11" r="3.2" fill="#e2573a"/>
+  </svg>
+  <span class="logo-word">Zippies</span>
+</span>
+<style>
+  .logo { display: inline-flex; align-items: center; gap: 10px; line-height: 1; }
+  .logo-mark { width: 38px; height: 38px; transition: transform 0.6s var(--ease); }
+  a:hover > .logo .logo-mark, .logo:hover .logo-mark { transform: rotate(-12deg) scale(1.06); }
+  .logo-word { font-family: var(--font-display); font-style: italic; font-weight: 500; font-size: 1.7rem; letter-spacing: -0.03em; font-variation-settings: 'opsz' 72; }
+</style>

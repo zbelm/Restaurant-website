@@ -1,0 +1,52 @@
+---
+import Art from './Art.astro';
+interface Props {
+  eyebrow: string;
+  title: string;
+  lead?: string;
+  art?: { kind: string; tone?: 'olive' | 'terracotta' | 'cream' | 'gold' | 'night' }[];
+}
+const { eyebrow, title, lead, art = [] } = Astro.props;
+---
+
+<section class="ph on-dark grain" data-mouse-scope>
+  <div class="blob b1" aria-hidden="true"></div>
+  <div class="blob b2" aria-hidden="true"></div>
+  <div class="container inner">
+    <div class="copy">
+      <p class="eyebrow" data-reveal>{eyebrow}</p>
+      <h1 class="h1 split" style="--base: 120ms" set:html={title} />
+      {lead && <p class="lead muted" data-reveal style="--d: 380ms">{lead}</p>}
+      <slot />
+    </div>
+    {art.length > 0 && (
+      <div class="stack" aria-hidden="true">
+        {art.slice(0, 3).map((a, i) => (
+          <div class={`disc d${i}`} data-mouse={14 + i * 10} data-reveal="scale" style={`--d:${300 + i * 140}ms`}>
+            <div class="disc-in"><Art kind={a.kind} tone={a.tone ?? 'terracotta'} /></div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .ph { padding: calc(var(--nav-h) + clamp(56px, 9vw, 120px)) 0 clamp(64px, 9vw, 120px); overflow: hidden; position: relative; background: radial-gradient(90% 120% at 85% 0%, #3d5236 0%, var(--olive-900) 55%); }
+  .inner { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
+  .copy .h1 { margin: 20px 0 22px; max-width: 14ch; }
+  .copy .lead { margin-bottom: 0; }
+  .blob { position: absolute; border-radius: 50%; filter: blur(70px); opacity: 0.5; animation: drift 14s ease-in-out infinite alternate; }
+  .b1 { width: 380px; height: 380px; background: #b23a22; right: -80px; top: -60px; opacity: 0.35; }
+  .b2 { width: 320px; height: 320px; background: #c9a25b; left: -100px; bottom: -120px; opacity: 0.22; animation-delay: -6s; }
+  @keyframes drift { to { transform: translate(40px, 30px) scale(1.15); } }
+  .stack { position: relative; height: clamp(260px, 32vw, 400px); }
+  .disc { position: absolute; border-radius: 50%; padding: 8px; background: var(--cream); box-shadow: var(--shadow-lift); translate: var(--mx, 0) var(--my, 0); transition: translate 0.5s var(--ease), opacity 0.9s var(--ease), transform 0.9s var(--ease); }
+  .disc-in { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; }
+  .d0 { width: 62%; aspect-ratio: 1; right: 6%; top: 0; }
+  .d1 { width: 42%; aspect-ratio: 1; left: 2%; bottom: 2%; }
+  .d2 { width: 26%; aspect-ratio: 1; right: 0; bottom: 6%; }
+  .disc.is-visible { animation: bob 7s ease-in-out infinite; animation-delay: calc(var(--d) * -1); }
+  @keyframes bob { 50% { transform: translateY(-12px) rotate(2deg); } }
+  @media (max-width: 860px) { .inner { grid-template-columns: 1fr; } .stack { display: none; } }
+</style>

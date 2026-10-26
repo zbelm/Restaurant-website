@@ -1,0 +1,45 @@
+{
+  "name": "Zippies",
+  "tagline": "Modern Italian, made with a little mischief.",
+  "description": "Zippies is a modern Italian restaurant serving hand-rolled pasta, wood-fired pizza, seasonal plates and natural wine in the heart of Riverton.",
+  "cuisine": "Modern Italian",
+  "priceRange": "$$",
+  "url": "https://zippies.example.com",
+  "timezone": "America/Los_Angeles",
+  "address": {
+    "street": "482 Marigold Lane",
+    "city": "Riverton",
+    "region": "CA",
+    "postalCode": "90210",
+    "country": "US"
+  },
+  "geo": { "lat": 34.0901, "lng": -118.4065 },
+  "contact": {
+    "phone": "(555) 010-0199",
+    "phoneHref": "+15550100199",
+    "email": "hello@example.com"
+  },
+  "social": {
+    "instagram": "https://instagram.com/placeholder",
+    "facebook": "https://facebook.com/placeholder",
+    "tiktok": "https://tiktok.com/@placeholder"
+  },
+  "links": {
+    "order": "https://order.example.com/zippies",
+    "reserveExternal": ""
+  },
+  "hours": [
+    { "day": "Monday", "closed": true },
+    { "day": "Tuesday", "ranges": [{ "open": "17:00", "close": "22:00" }] },
+    { "day": "Wednesday", "ranges": [{ "open": "17:00", "close": "22:00" }] },
+    { "day": "Thursday", "ranges": [{ "open": "17:00", "close": "22:00" }] },
+    { "day": "Friday", "ranges": [{ "open": "17:00", "close": "23:00" }] },
+    { "day": "Saturday", "ranges": [{ "label": "Brunch", "open": "10:00", "close": "14:00" }, { "label": "Dinner", "open": "17:00", "close": "23:00" }] },
+    { "day": "Sunday", "ranges": [{ "label": "Brunch", "open": "10:00", "close": "14:00" }, { "label": "Dinner", "open": "16:00", "close": "21:00" }] }
+  ],
+  "stats": [
+    { "value": 2019, "label": "Doors opened", "format": "year" },
+    { "value": 14, "label": "Hand-rolled pastas" },
+    { "value": 100, "label": "Made in-house", "suffix": "%" }
+  ]
+}

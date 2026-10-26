@@ -1,0 +1,31 @@
+---
+import Art from './Art.astro';
+import { price } from '../lib/format';
+interface Props { dish: any; }
+const { dish } = Astro.props;
+---
+
+<div class="dish-wrap" data-reveal><article class="dish tilt">
+  <div class="media">
+    <Art kind={dish.art.kind} tone={dish.art.tone} alt={dish.name} />
+    <span class="price">{price(dish.price)}</span>
+  </div>
+  <div class="body">
+    <div class="tags">{dish.tags.map((t: string) => <span class={`tag tag--${t}`} title={t}>{t}</span>)}</div>
+    <h3 class="h3">{dish.name}</h3>
+    <p>{dish.description}</p>
+  </div>
+</article></div>
+
+<style>
+  .dish-wrap { height: 100%; }
+  .dish { --rx: 0deg; --ry: 0deg; background: var(--paper); border-radius: var(--radius-lg); padding: 12px; box-shadow: var(--shadow-soft); transform: perspective(1000px) rotateX(var(--rx)) rotateY(var(--ry)); transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease); height: 100%; }
+  .dish:hover { box-shadow: var(--shadow-lift); }
+  .media { position: relative; aspect-ratio: 4 / 3.4; border-radius: calc(var(--radius-lg) - 8px); overflow: hidden; }
+  .media :global(.art svg) { transition: transform 0.9s var(--ease); }
+  .dish:hover .media :global(.art svg) { transform: scale(1.1) rotate(2deg); }
+  .price { position: absolute; top: 14px; right: 14px; z-index: 2; background: var(--cream); color: var(--olive-900); font-family: var(--font-display); font-size: 1.15rem; padding: 6px 16px; border-radius: 999px; box-shadow: 0 6px 16px -6px rgb(0 0 0 / 0.4); }
+  .body { padding: 20px 14px 14px; }
+  .tags { display: flex; gap: 6px; min-height: 22px; margin-bottom: 12px; }
+  .body p { margin: 10px 0 0; color: var(--muted); font-size: 0.98rem; }
+</style>

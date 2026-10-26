@@ -1,0 +1,118 @@
+---
+import '@fontsource-variable/fraunces/opsz.css';
+import '@fontsource-variable/fraunces/opsz-italic.css';
+import '@fontsource-variable/inter/index.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import site from '../content/site.json';
+import { hours } from '../lib/format';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  hideMobileBar?: boolean;
+}
+const { title, description = site.description, image = '/og.png', noindex = false, hideMobileBar = false } = Astro.props;
+
+const fullTitle = title ? `${title} | ${site.name}` : `${site.name} | ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const ogImage = new URL(image, Astro.site ?? site.url).href;
+
+const dayMap: Record<string, string> = { Monday: 'Mo', Tuesday: 'Tu', Wednesday: 'We', Thursday: 'Th', Friday: 'Fr', Saturday: 'Sa', Sunday: 'Su' };
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  '@id': `${site.url}/#restaurant`,
+  name: site.name,
+  description: site.description,
+  url: site.url,
+  image: new URL('/og.png', site.url).href,
+  servesCuisine: site.cuisine,
+  priceRange: site.priceRange,
+  telephone: site.contact.phone,
+  email: site.contact.email,
+  hasMenu: `${site.url}/menu`,
+  acceptsReservations: 'True',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.street,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postalCode,
+    addressCountry: site.address.country,
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  openingHoursSpecification: hours.flatMap((d) =>
+    (d.ranges ?? []).map((r) => ({ '@type': 'OpeningHoursSpecification', dayOfWeek: d.day, opens: r.open, closes: r.close })),
+  ),
+  sameAs: Object.values(site.social),
+};
+---
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>document.documentElement.className = 'js';</script>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#1f2a1c" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <meta property="og:type" content="restaurant.restaurant" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script id="site-data" type="application/json" set:html={JSON.stringify({ timezone: site.timezone, hours })} />
+  </head>
+  <body>
+    <Nav />
+    <main id="main" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+
+    {!hideMobileBar && (
+      <div class="mobile-bar" data-mobile-bar>
+        <a class="btn" href="/reservations">Reserve a table</a>
+        <a class="btn btn--light order" href={site.links.order} target="_blank" rel="noopener">Order</a>
+      </div>
+    )}
+
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  main:focus { outline: none; }
+  .mobile-bar { display: none; }
+  @media (max-width: 960px) {
+    .mobile-bar {
+      display: flex; gap: 10px; position: fixed; inset: auto 12px 12px 12px; z-index: 90; padding: 8px;
+      background: rgb(31 42 28 / 0.92); backdrop-filter: blur(14px); border-radius: 999px; box-shadow: 0 18px 40px -12px rgb(0 0 0 / 0.5);
+      transform: translateY(140%); transition: transform 0.6s var(--ease);
+    }
+    .mobile-bar.is-on { transform: none; }
+    .mobile-bar .btn { flex: 1; padding: 13px 18px; box-shadow: none; }
+    .mobile-bar .order { flex: 0 0 auto; }
+    body { padding-bottom: 84px; }
+  }
+</style>

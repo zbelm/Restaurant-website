@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Pasta Night School",
+    "when": "First Wednesday of every month",
+    "time": "6:30 pm",
+    "price": "$85 per person",
+    "description": "Roll, cut and shape three pastas with our kitchen team, then eat everything you make with wine pairings.",
+    "art": { "kind": "dough", "tone": "gold" }
+  },
+  {
+    "title": "Natural Wine Wednesdays",
+    "when": "Every Wednesday",
+    "time": "From 5 pm",
+    "price": "Half-price bottles",
+    "description": "A rotating list of small-producer natural wines, poured by the glass and opened by the bottle.",
+    "art": { "kind": "wine", "tone": "night" }
+  },
+  {
+    "title": "Weekend Brunch",
+    "when": "Saturday & Sunday",
+    "time": "10 am – 2 pm",
+    "price": "A la carte",
+    "description": "Ricotta pancakes, pizza bianca eggs, bottomless-ish spritzes and a very good cappuccino.",
+    "art": { "kind": "espresso", "tone": "terracotta" }
+  }
+]

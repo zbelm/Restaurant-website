@@ -1,0 +1,100 @@
+---
+import Logo from './Logo.astro';
+import site from '../content/site.json';
+import { hours, fmtRanges, addressLine, mapsUrl } from '../lib/format';
+const year = new Date().getFullYear();
+const social = [
+  { name: 'Instagram', href: site.social.instagram, path: 'M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 4.5A4.5 4.5 0 1 0 12 16.5 4.5 4.5 0 0 0 12 7.5Zm5.2-1.7a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2Z' },
+  { name: 'Facebook', href: site.social.facebook, path: 'M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v7h4v-7h3l1-4h-4V8Z' },
+  { name: 'TikTok', href: site.social.tiktok, path: 'M14 3h3a5 5 0 0 0 4 4v3a8 8 0 0 1-4-1.2V15a6 6 0 1 1-6-6v3.2a2.8 2.8 0 1 0 3 2.8V3Z' },
+];
+---
+
+<footer class="footer on-dark grain">
+  <div class="container">
+    <div class="top">
+      <div class="join">
+        <p class="eyebrow">Stay in the loop</p>
+        <h2 class="h2">Pasta news, <em>delivered</em>.</h2>
+        <p class="muted">New menus, events and the occasional secret special. No spam, ever.</p>
+        <form class="news" data-newsletter novalidate>
+          <label class="sr-only" for="news-email">Email address</label>
+          <input id="news-email" class="input" type="email" name="email" placeholder="you@email.com" autocomplete="email" required />
+          <button class="btn btn--light" type="submit">Subscribe <span class="arrow" aria-hidden="true">→</span></button>
+          <p class="news-msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <div class="cols">
+        <div>
+          <h3 class="col-h">Visit</h3>
+          <address>
+            <a href={mapsUrl} target="_blank" rel="noopener">{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.postalCode}</a>
+          </address>
+          <p class="mt"><a href={`tel:${site.contact.phoneHref}`}>{site.contact.phone}</a><br /><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p>
+        </div>
+        <div>
+          <h3 class="col-h">Hours</h3>
+          <ul class="hrs">
+            {hours.map((d) => (<li data-day={d.day}><span>{d.day.slice(0, 3)}</span><span>{fmtRanges(d)}</span></li>))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="col-h">Explore</h3>
+          <ul class="nav-links">
+            <li><a href="/menu">Menu</a></li>
+            <li><a href="/reservations">Reservations</a></li>
+            <li><a href={site.links.order} target="_blank" rel="noopener">Order online</a></li>
+            <li><a href="/events">Events &amp; private dining</a></li>
+            <li><a href="/about">Our story</a></li>
+            <li><a href="/gallery">Gallery</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="word" aria-hidden="true">Zippies</div>
+
+    <div class="bottom">
+      <Logo class="mini" />
+      <p>© {year} {site.name}. All rights reserved. Placeholder demo content.</p>
+      <ul class="social">
+        {social.map((s) => (
+          <li><a href={s.href} aria-label={s.name} target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d={s.path} fill="currentColor" /></svg></a></li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { padding: clamp(64px, 9vw, 120px) 0 28px; overflow: hidden; background: var(--olive-950); }
+  .footer > .container { position: relative; z-index: 1; }
+  .top { display: grid; grid-template-columns: 1.1fr 1.4fr; gap: clamp(40px, 7vw, 100px); }
+  .join .h2 { margin: 14px 0 16px; }
+  .join p.muted { max-width: 42ch; }
+  .news { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; max-width: 480px; }
+  .news .input { flex: 1 1 220px; background: rgb(246 239 227 / 0.08); border-color: rgb(246 239 227 / 0.25); color: var(--cream); }
+  .news .input::placeholder { color: rgb(246 239 227 / 0.5); }
+  .news .input:focus { background: rgb(246 239 227 / 0.14); }
+  .news .input.bad { border-color: #ff8f7a; }
+  .news-msg { flex-basis: 100%; margin: 4px 0 0; min-height: 1.5em; font-size: 0.92rem; color: var(--gold-soft); }
+  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .col-h { font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
+  address { font-style: normal; }
+  .footer a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.4s var(--ease); }
+  .footer a:hover { background-size: 100% 1px; }
+  .mt { margin-top: 18px; }
+  .hrs li, .nav-links li { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: 0.95rem; color: rgb(246 239 227 / 0.82); }
+  .hrs li.today { color: var(--gold); font-weight: 600; }
+  .nav-links li { display: block; }
+  .word { font-family: var(--font-display); font-style: italic; font-size: clamp(6rem, 24vw, 22rem); line-height: 0.8; letter-spacing: -0.06em; text-align: center; margin: clamp(48px, 7vw, 90px) 0 18px; color: transparent; -webkit-text-stroke: 1.5px rgb(246 239 227 / 0.22); user-select: none; font-variation-settings: 'opsz' 144; }
+  .bottom { display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; border-top: 1px solid rgb(246 239 227 / 0.14); padding-top: 24px; font-size: 0.88rem; color: rgb(246 239 227 / 0.65); }
+  .bottom p { margin: 0; }
+  .social { display: flex; gap: 10px; }
+  .social a { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1px solid rgb(246 239 227 / 0.3); color: var(--cream); background-image: none; transition: transform 0.4s var(--ease), background 0.3s, color 0.3s; }
+  .social a:hover { background: var(--cream); color: var(--olive-900); transform: translateY(-3px) rotate(-6deg); }
+  .social svg { width: 18px; height: 18px; }
+  @media (max-width: 900px) { .top { grid-template-columns: 1fr; } }
+  @media (max-width: 560px) { .cols { grid-template-columns: 1fr 1fr; } .cols > :first-child { grid-column: 1 / -1; } }
+</style>

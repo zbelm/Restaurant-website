@@ -1,0 +1,268 @@
+---
+import Base from '../layouts/Base.astro';
+import Art from '../components/Art.astro';
+import DishCard from '../components/DishCard.astro';
+import site from '../content/site.json';
+import menu from '../content/menu.json';
+import testimonials from '../content/testimonials.json';
+import { hours, fmtRanges, addressLine, mapsUrl } from '../lib/format';
+
+const featured = menu.categories.flatMap((c) => c.items).filter((d: any) => d.featured).slice(0, 6);
+const marquee = ['Hand-rolled pasta', 'Wood-fired pizza', 'Natural wine', 'Seasonal plates', 'House-churned gelato', 'Spritz o’clock'];
+const { lat, lng } = site.geo;
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.008}%2C${lat - 0.005}%2C${lng + 0.008}%2C${lat + 0.005}&layer=mapnik&marker=${lat}%2C${lng}`;
+---
+
+<Base description={site.description}>
+  <!-- ═════════ HERO ═════════ -->
+  <section class="hero on-dark grain" data-mouse-scope>
+    <div class="glow g1" aria-hidden="true"></div>
+    <div class="glow g2" aria-hidden="true"></div>
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <p class="pill" data-reveal data-open-status data-open="false"><span class="dot"></span><span data-open-text>Modern Italian · Riverton, CA</span></p>
+        <h1 class="display split" style="--base: 200ms">Pasta with a little <em>mischief.</em></h1>
+        <p class="lead muted" data-reveal style="--d: 700ms">Hand-rolled pasta, wood-fired pizza and natural wine in a room that glows after dark. Come hungry. Leave loud.</p>
+        <div class="btn-row" data-reveal style="--d: 850ms">
+          <a class="btn" href="/reservations">Reserve a table <span class="arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href={site.links.order} target="_blank" rel="noopener">Order online</a>
+        </div>
+      </div>
+
+      <div class="stage" aria-hidden="true">
+        <div class="ring" data-reveal="fade" style="--d: 500ms">
+          <svg viewBox="0 0 400 400"><defs><path id="circ" d="M200,200 m-170,0 a170,170 0 1,1 340,0 a170,170 0 1,1 -340,0" /></defs>
+            <text><textPath href="#circ" startOffset="0">HANDMADE DAILY ✺ WOOD-FIRED ✺ NATURAL WINE ✺ MODERN ITALIAN ✺ </textPath></text>
+          </svg>
+        </div>
+        <div class="plate" data-reveal="scale" style="--d: 300ms" data-mouse="18">
+          <div class="plate-in"><Art kind="pasta" tone="terracotta" eager /></div>
+        </div>
+        <div class="float f1" data-mouse="38"><Art kind="burrata" tone="gold" eager /></div>
+        <div class="float f2" data-mouse="-30"><Art kind="spritz" tone="olive" eager /></div>
+        <div class="badge" data-mouse="-14"><span>Chef’s<br />pick</span><strong>$24</strong></div>
+      </div>
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true"><span></span></div>
+  </section>
+
+  <!-- ═════════ MARQUEE ═════════ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      {[0, 1].map(() => (
+        <ul>{marquee.map((m) => (<li>{m}<i>✺</i></li>))}</ul>
+      ))}
+    </div>
+  </div>
+
+  <!-- ═════════ STORY ═════════ -->
+  <section class="section story">
+    <div class="container story-grid">
+      <div class="collage" data-reveal="left">
+        <div class="arch a1" data-parallax="0.06"><Art kind="dough" tone="gold" /></div>
+        <div class="arch a2" data-parallax="-0.05"><Art kind="interior" tone="night" /></div>
+        <div class="stamp" aria-hidden="true"><span>Since<br /><b>2019</b></span></div>
+      </div>
+      <div class="story-copy">
+        <p class="eyebrow" data-reveal>Our story</p>
+        <h2 class="h2 split" style="margin: 18px 0 24px">Rolled by hand. Served with a <em>wink.</em></h2>
+        <p class="lead" data-reveal style="--d: 150ms">Zippies started with one rolling pin, a borrowed pizza oven and a stubborn belief that Italian food can be both serious and ridiculously fun.</p>
+        <p data-reveal style="--d: 220ms" class="muted">Every morning our kitchen mills, rolls and cuts the day’s pasta. Our sauces simmer for hours, our dough rests for two days, and our wine list is full of small producers we love. It’s Italian cooking with a modern twist, and a room full of people who are really happy you came.</p>
+        <ul class="stats" data-stagger="120">
+          {site.stats.map((s: any) => (
+            <li data-reveal>
+              <strong class="stat" data-count={s.value} data-format={s.format} data-suffix={s.suffix}>{s.value}{s.suffix ?? ''}</strong>
+              <span>{s.label}</span>
+            </li>
+          ))}
+        </ul>
+        <a class="link-arrow" href="/about" data-reveal>Meet the team <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ FEATURED ═════════ -->
+  <section class="section featured on-paper">
+    <div class="container">
+      <div class="head-row">
+        <div class="section-head">
+          <p class="eyebrow" data-reveal>House favorites</p>
+          <h2 class="h2 split" style="margin-top: 18px">What everyone <em>orders.</em></h2>
+        </div>
+        <a class="btn btn--ghost" href="/menu" data-reveal>See the full menu <span class="arrow" aria-hidden="true">→</span></a>
+      </div>
+      <div class="grid" data-stagger="110">
+        {featured.map((d: any) => <DishCard dish={d} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ DINE / ORDER ═════════ -->
+  <section class="section--tight dual">
+    <div class="container dual-grid">
+      <a class="panel dine on-dark" href="/reservations" data-reveal="left">
+        <Art class="bg" kind="interior" tone="night" />
+        <div class="panel-copy">
+          <p class="eyebrow">Dine in</p>
+          <h3 class="h2">Save your <em>seat.</em></h3>
+          <p class="muted">Book a table for two or twenty. Walk-ins welcome at the bar.</p>
+          <span class="btn btn--light">Reserve now <span class="arrow" aria-hidden="true">→</span></span>
+        </div>
+      </a>
+      <a class="panel takeout" href={site.links.order} target="_blank" rel="noopener" data-reveal="right">
+        <Art class="bg" kind="pizza" tone="terracotta" />
+        <div class="panel-copy on-dark">
+          <p class="eyebrow">Pickup &amp; delivery</p>
+          <h3 class="h2">Zippies, <em>at home.</em></h3>
+          <p class="muted">Hot pizza and fresh pasta, ready in about 25 minutes.</p>
+          <span class="btn btn--light">Order online <span class="arrow" aria-hidden="true">→</span></span>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═════════ TESTIMONIALS ═════════ -->
+  <section class="section reviews on-dark grain">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow" data-reveal>Kind words</p>
+        <h2 class="h2 split" style="margin-top: 18px">Loved by the <em>neighborhood.</em></h2>
+      </div>
+      <div class="rev-grid" data-stagger="130">
+        {testimonials.map((t) => (
+          <figure class="rev" data-reveal>
+            <div class="stars" role="img" aria-label={`${t.rating} out of 5 stars`}>{'★'.repeat(t.rating)}</div>
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption><b>{t.name}</b><span>{t.detail}</span></figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═════════ VISIT ═════════ -->
+  <section class="section visit">
+    <div class="container visit-grid">
+      <div class="visit-copy">
+        <p class="eyebrow" data-reveal>Come say hi</p>
+        <h2 class="h2 split" style="margin: 18px 0 24px">Find us on <em>Marigold Lane.</em></h2>
+        <p class="lead" data-reveal style="--d: 120ms">{addressLine}</p>
+        <p class="status pill-light" data-reveal style="--d: 180ms" data-open-status data-open="false"><span class="dot"></span><span data-open-text>Checking hours…</span></p>
+        <ul class="hours-list" data-reveal style="--d: 240ms">
+          {hours.map((d) => (<li data-day={d.day}><span>{d.day}</span><span class="time">{fmtRanges(d)}</span></li>))}
+        </ul>
+        <div class="btn-row" data-reveal style="--d: 300ms">
+          <a class="btn" href={mapsUrl} target="_blank" rel="noopener">Get directions</a>
+          <a class="btn btn--ghost" href={`tel:${site.contact.phoneHref}`}>{site.contact.phone}</a>
+        </div>
+      </div>
+      <div class="map" data-reveal="scale">
+        <iframe title={`Map showing ${site.name} at ${addressLine}`} src={mapSrc} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* HERO */
+  .hero { min-height: 100svh; padding: calc(var(--nav-h) + 40px) 0 80px; display: grid; align-items: center; position: relative; overflow: hidden; background: radial-gradient(80% 90% at 80% 20%, #405638 0%, var(--olive-900) 55%, var(--olive-950) 100%); }
+  .glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; animation: drift 16s ease-in-out infinite alternate; }
+  .g1 { width: 520px; height: 520px; background: #b23a22; opacity: 0.32; right: -120px; top: 10%; }
+  .g2 { width: 420px; height: 420px; background: #c9a25b; opacity: 0.18; left: -140px; bottom: -80px; animation-delay: -7s; }
+  @keyframes drift { to { transform: translate(50px, 40px) scale(1.18); } }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(24px, 5vw, 80px); align-items: center; position: relative; z-index: 1; }
+  .hero-copy { display: grid; gap: 28px; justify-items: start; }
+  .hero-copy .display em { color: var(--gold); }
+  .hero-copy .lead { margin: 0; }
+  .stage { position: relative; aspect-ratio: 1; width: 100%; max-width: 620px; margin-inline: auto; }
+  .ring { position: absolute; inset: -4%; animation: spin 40s linear infinite; }
+  .ring svg { width: 100%; height: 100%; }
+  .ring text { font-family: var(--font-body); font-size: 17px; letter-spacing: 0.32em; font-weight: 600; fill: var(--gold); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .plate { position: absolute; inset: 9%; border-radius: 50%; padding: 12px; background: var(--cream); box-shadow: 0 50px 90px -30px rgb(0 0 0 / 0.7), inset 0 0 0 1px rgb(0 0 0 / 0.05); translate: var(--mx, 0) var(--my, 0); transition: translate 0.6s var(--ease), opacity 1.1s var(--ease), transform 1.1s var(--ease); }
+  .plate.is-visible { animation: plate-float 9s ease-in-out infinite; }
+  .plate-in { width: 100%; height: 100%; border-radius: 50%; overflow: hidden; }
+  @keyframes plate-float { 50% { transform: translateY(-10px) rotate(-1.5deg); } }
+  .float { position: absolute; width: 27%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 6px solid var(--cream); box-shadow: var(--shadow-lift); translate: var(--mx, 0) var(--my, 0); transition: translate 0.5s var(--ease); }
+  .f1 { left: -2%; top: 8%; animation: bob 6s ease-in-out infinite; }
+  .f2 { right: -1%; bottom: 4%; width: 24%; animation: bob 7s ease-in-out infinite -3s; }
+  @keyframes bob { 50% { transform: translateY(-14px); } }
+  .badge { position: absolute; right: 6%; top: 4%; width: 110px; height: 110px; border-radius: 50%; background: var(--tomato); color: #fff; display: grid; place-content: center; text-align: center; transform: rotate(12deg); box-shadow: 0 14px 30px -8px rgb(0 0 0 / 0.5); translate: var(--mx, 0) var(--my, 0); animation: wobble 5s ease-in-out infinite; }
+  .badge span { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; line-height: 1.2; }
+  .badge strong { font-family: var(--font-display); font-size: 1.9rem; font-weight: 500; line-height: 1; }
+  @keyframes wobble { 50% { transform: rotate(4deg) scale(1.05); } }
+  .scroll-hint { position: absolute; bottom: 24px; left: 50%; width: 26px; height: 42px; border: 1.5px solid rgb(246 239 227 / 0.5); border-radius: 14px; translate: -50% 0; }
+  .scroll-hint span { position: absolute; left: 50%; top: 8px; width: 4px; height: 8px; border-radius: 2px; background: var(--cream); translate: -50% 0; animation: scroll-dot 1.8s var(--ease) infinite; }
+  @keyframes scroll-dot { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(16px); } }
+  @media (max-width: 900px) {
+    .hero { padding-top: calc(var(--nav-h) + 24px); align-items: start; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .stage { max-width: 420px; order: -1; margin-bottom: 8px; }
+    .badge { width: 86px; height: 86px; } .badge strong { font-size: 1.4rem; }
+    .scroll-hint { display: none; }
+  }
+
+  /* MARQUEE */
+  .marquee { background: var(--tomato); color: #fff; overflow: hidden; padding: 18px 0; transform: rotate(-1.2deg) scale(1.03); margin: -18px 0 -10px; position: relative; z-index: 2; box-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.4); }
+  .track { display: flex; width: max-content; animation: marquee 32s linear infinite; }
+  .marquee:hover .track { animation-play-state: paused; }
+  .track ul { display: flex; flex-shrink: 0; }
+  .track li { font-family: var(--font-display); font-style: italic; font-size: clamp(1.4rem, 3vw, 2.2rem); white-space: nowrap; display: flex; align-items: center; }
+  .track i { font-style: normal; margin: 0 clamp(20px, 3vw, 40px); opacity: 0.7; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+
+  /* STORY */
+  .story-grid { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(40px, 8vw, 120px); align-items: center; }
+  .collage { position: relative; aspect-ratio: 1 / 1.1; }
+  .arch { position: absolute; border-radius: 999px 999px 24px 24px; overflow: hidden; box-shadow: var(--shadow-lift); will-change: transform; }
+  .a1 { width: 62%; height: 78%; left: 0; top: 0; }
+  .a2 { width: 52%; height: 62%; right: 0; bottom: 0; border: 8px solid var(--cream); }
+  .stamp { position: absolute; left: 44%; top: 62%; width: 112px; height: 112px; border-radius: 50%; background: var(--gold); color: var(--olive-900); display: grid; place-content: center; text-align: center; font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; font-weight: 700; transform: rotate(-12deg); animation: wobble 6s ease-in-out infinite; box-shadow: var(--shadow-soft); z-index: 3; }
+  .stamp b { font-family: var(--font-display); font-size: 1.7rem; letter-spacing: 0; font-weight: 500; }
+  .story-copy .lead { margin-bottom: 18px; }
+  .stats { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: clamp(20px, 4vw, 56px); margin: 36px 0; padding: 26px 0; border-block: 1px solid var(--line); }
+  .stats strong { display: block; font-family: var(--font-display); font-size: clamp(2.2rem, 4vw, 3.2rem); line-height: 1; color: var(--tomato); font-weight: 500; font-variant-numeric: tabular-nums; }
+  .stats span { font-size: 0.85rem; color: var(--muted); }
+  @media (max-width: 900px) { .story-grid { grid-template-columns: 1fr; } .collage { max-width: 520px; width: 100%; margin-inline: auto; } .stats { grid-template-columns: repeat(3, 1fr); } }
+
+  /* FEATURED */
+  .head-row { display: flex; align-items: end; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  .head-row .section-head { margin-bottom: clamp(24px, 4vw, 48px); }
+  .head-row > .btn { margin-bottom: clamp(24px, 4vw, 48px); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.4vw, 32px); }
+  @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 620px) { .grid { grid-template-columns: 1fr; } }
+
+  /* DUAL */
+  .dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(16px, 2.4vw, 32px); }
+  .panel { position: relative; display: flex; align-items: end; min-height: clamp(340px, 40vw, 480px); border-radius: var(--radius-lg); overflow: hidden; text-decoration: none; isolation: isolate; color: var(--cream); }
+  .panel :global(.bg) { position: absolute; inset: 0; z-index: -2; transition: transform 1.2s var(--ease); }
+  .panel::after { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, transparent 20%, rgb(22 28 20 / 0.88)); }
+  .panel:hover :global(.bg) { transform: scale(1.07); }
+  .panel-copy { padding: clamp(24px, 3.5vw, 44px); display: grid; gap: 14px; justify-items: start; background: none; }
+  .panel-copy .muted { margin: 0; max-width: 38ch; }
+  .panel:hover .btn { transform: translateY(-2px); }
+  .panel:hover .btn .arrow { transform: translateX(5px); }
+  .panel .btn:hover::before { transform: none; }
+  @media (max-width: 800px) { .dual-grid { grid-template-columns: 1fr; } }
+
+  /* REVIEWS */
+  .rev-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 2.4vw, 32px); }
+  .rev { margin: 0; padding: clamp(26px, 3vw, 40px); border-radius: var(--radius-lg); background: rgb(246 239 227 / 0.06); border: 1px solid rgb(246 239 227 / 0.14); display: grid; gap: 20px; align-content: space-between; transition: background 0.4s, transform 0.6s var(--ease), border-color 0.4s; }
+  .rev:hover { background: rgb(246 239 227 / 0.1); border-color: var(--gold); }
+  .stars { color: var(--gold); letter-spacing: 4px; font-size: 1.05rem; }
+  .rev blockquote { margin: 0; font-family: var(--font-display); font-size: clamp(1.2rem, 1.8vw, 1.45rem); line-height: 1.35; font-weight: 400; }
+  .rev figcaption { display: grid; font-size: 0.9rem; }
+  .rev figcaption span { color: rgb(246 239 227 / 0.65); }
+  @media (max-width: 900px) { .rev-grid { grid-template-columns: 1fr; } }
+
+  /* VISIT */
+  .visit-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 96px); align-items: stretch; }
+  .visit-copy .lead { margin-bottom: 18px; }
+  .status { display: inline-flex; gap: 10px; align-items: center; font-weight: 600; margin-bottom: 18px; padding: 8px 16px; border-radius: 999px; background: var(--cream-2); border: 1px solid var(--line); }
+  .visit .hours-list { margin-bottom: 28px; max-width: 460px; }
+  .map { border-radius: var(--radius-lg); overflow: hidden; min-height: 420px; box-shadow: var(--shadow-lift); border: 8px solid var(--paper); background: var(--cream-2); }
+  .map iframe { width: 100%; height: 100%; min-height: 420px; border: 0; filter: sepia(0.25) saturate(0.85) contrast(0.95); }
+  @media (max-width: 900px) { .visit-grid { grid-template-columns: 1fr; } }
+</style>
