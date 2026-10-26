@@ -32,7 +32,7 @@
 
 /* ─────────── Reset ─────────── */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 16px); }
+html { overflow-x: clip; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; scroll-padding-top: calc(var(--nav-h) + 16px); }
 body {
   margin: 0; background: var(--cream); color: var(--ink);
   font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.65;

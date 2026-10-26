@@ -1,0 +1,24 @@
+---
+interface Props { title: string; id?: string }
+const { title, id } = Astro.props;
+---
+<div class="done" data-done hidden tabindex="-1" id={id}>
+  <svg class="check" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="36" /><path d="M24 41l11 11 21-24" /></svg>
+  <h2 class="h2" set:html={title} />
+  <div class="summary" data-summary><slot /></div>
+  <div class="btn-row" style="justify-content:center"><slot name="actions" /></div>
+</div>
+<style>
+  .done { text-align: center; display: grid; gap: 18px; justify-items: center; padding: clamp(12px, 3vw, 32px); }
+  .done[hidden] { display: none; }
+  .done:not([hidden]) { animation: rise 0.8s var(--ease) both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(24px) scale(0.97); } }
+  .check { width: 92px; height: 92px; }
+  .check circle { fill: #e6eed8; stroke: #5b8a3c; stroke-width: 3; stroke-dasharray: 227; stroke-dashoffset: 227; animation: draw 0.8s var(--ease) 0.1s forwards; }
+  .check path { fill: none; stroke: #3f6b2a; stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw 0.6s var(--ease) 0.7s forwards; }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .summary { color: var(--muted); max-width: 44ch; }
+  .summary :global(dl) { display: grid; grid-template-columns: auto 1fr; gap: 8px 20px; text-align: left; background: var(--cream); padding: 20px 26px; border-radius: var(--radius); margin: 8px auto 0; }
+  .summary :global(dt) { font-weight: 600; color: var(--olive-800); }
+  .summary :global(dd) { margin: 0; color: var(--ink); }
+</style>

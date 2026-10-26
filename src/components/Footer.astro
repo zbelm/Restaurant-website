@@ -79,13 +79,13 @@ const social = [
   .news .input:focus { background: rgb(246 239 227 / 0.14); }
   .news .input.bad { border-color: #ff8f7a; }
   .news-msg { flex-basis: 100%; margin: 4px 0 0; min-height: 1.5em; font-size: 0.92rem; color: var(--gold-soft); }
-  .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .cols { display: grid; grid-template-columns: 1fr 1.5fr 1fr; gap: 32px; }
   .col-h { font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; font-weight: 600; }
   address { font-style: normal; }
   .footer a { text-decoration: none; background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.4s var(--ease); }
   .footer a:hover { background-size: 100% 1px; }
   .mt { margin-top: 18px; }
-  .hrs li, .nav-links li { display: flex; justify-content: space-between; gap: 12px; padding: 4px 0; font-size: 0.95rem; color: rgb(246 239 227 / 0.82); }
+  .hrs li, .nav-links li { display: flex; justify-content: space-between; gap: 12px; white-space: nowrap; padding: 4px 0; font-size: 0.95rem; color: rgb(246 239 227 / 0.82); }
   .hrs li.today { color: var(--gold); font-weight: 600; }
   .nav-links li { display: block; }
   .word { font-family: var(--font-display); font-style: italic; font-size: clamp(6rem, 24vw, 22rem); line-height: 0.8; letter-spacing: -0.06em; text-align: center; margin: clamp(48px, 7vw, 90px) 0 18px; color: transparent; -webkit-text-stroke: 1.5px rgb(246 239 227 / 0.22); user-select: none; font-variation-settings: 'opsz' 144; }
@@ -96,5 +96,5 @@ const social = [
   .social a:hover { background: var(--cream); color: var(--olive-900); transform: translateY(-3px) rotate(-6deg); }
   .social svg { width: 18px; height: 18px; }
   @media (max-width: 900px) { .top { grid-template-columns: 1fr; } }
-  @media (max-width: 560px) { .cols { grid-template-columns: 1fr 1fr; } .cols > :first-child { grid-column: 1 / -1; } }
+  @media (max-width: 560px) { .hrs li { white-space: normal; } .cols { grid-template-columns: 1fr 1fr; } .cols > :first-child { grid-column: 1 / -1; } }
 </style>

@@ -1,0 +1,19 @@
+---
+import Base from '../layouts/Base.astro';
+import Art from '../components/Art.astro';
+---
+<Base title="Page not found" noindex hideMobileBar>
+  <section class="nf on-dark grain">
+    <div class="plate"><Art kind="pasta" tone="terracotta" /></div>
+    <p class="eyebrow">Error 404</p>
+    <h1 class="h1 split">This page went <em>missing.</em></h1>
+    <p class="lead muted">Like the last slice of pizza at a family dinner. Let’s get you back to the good stuff.</p>
+    <div class="btn-row"><a class="btn btn--light" href="/">Back home</a><a class="btn btn--ghost" href="/menu">View menu</a></div>
+  </section>
+</Base>
+<style>
+  .nf { min-height: 100svh; display: grid; place-content: center; justify-items: center; text-align: center; gap: 20px; padding: 120px var(--gutter) 80px; background: radial-gradient(80% 80% at 50% 0%, #405638, var(--olive-900)); }
+  .plate { width: clamp(160px, 24vw, 240px); aspect-ratio: 1; border-radius: 50%; overflow: hidden; border: 8px solid var(--cream); animation: spin 14s linear infinite; box-shadow: 0 40px 80px -30px #000; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .nf .lead { margin: 0; }
+</style>

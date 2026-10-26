@@ -1,0 +1,97 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Confirmation from '../components/Confirmation.astro';
+import site from '../content/site.json';
+import { hours, fmtRanges, addressLine, mapsUrl } from '../lib/format';
+
+const { lat, lng } = site.geo;
+const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.008}%2C${lat - 0.005}%2C${lng + 0.008}%2C${lat + 0.005}&layer=mapnik&marker=${lat}%2C${lng}`;
+const topics = [['general', 'General question'], ['private-dining', 'Private dining'], ['catering', 'Catering & gift cards'], ['feedback', 'Feedback'], ['press', 'Press & partnerships']];
+---
+
+<Base title="Contact & Location" description={`Find ${site.name} at ${addressLine}. Opening hours, directions, phone and a contact form.`}>
+  <PageHeader eyebrow="Contact" title="Say <em>ciao.</em>" lead="Questions, feedback, big plans? We read every message and usually reply within a day." art={[{ kind: 'espresso', tone: 'gold' }, { kind: 'focaccia', tone: 'terracotta' }]} />
+
+  <section class="section">
+    <div class="container cols">
+      <div class="info" data-stagger="110">
+        <div class="item" data-reveal><span class="ic" aria-hidden="true">📍</span><div><h2 class="h3">Visit</h2><p><a href={mapsUrl} target="_blank" rel="noopener">{site.address.street}<br />{site.address.city}, {site.address.region} {site.address.postalCode}</a></p></div></div>
+        <div class="item" data-reveal><span class="ic" aria-hidden="true">📞</span><div><h2 class="h3">Call</h2><p><a href={`tel:${site.contact.phoneHref}`}>{site.contact.phone}</a><br /><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></p></div></div>
+        <div class="item" data-reveal>
+          <span class="ic" aria-hidden="true">🕰️</span>
+          <div style="flex:1"><h2 class="h3">Hours</h2>
+            <p class="status" data-open-status data-open="false"><span class="dot"></span><span data-open-text>Checking hours…</span></p>
+            <ul class="hours-list">{hours.map((d) => (<li data-day={d.day}><span>{d.day}</span><span class="time">{fmtRanges(d)}</span></li>))}</ul>
+          </div>
+        </div>
+        <div class="item" data-reveal><span class="ic" aria-hidden="true">🚗</span><div><h2 class="h3">Getting here</h2><p class="muted">Street parking on Marigold Lane and a free lot behind the restaurant after 5 pm. Bike racks by the patio. Bus lines 14 and 22 stop one block away.</p></div></div>
+      </div>
+
+      <div class="form-card" id="contact-form" data-reveal>
+        <form id="contact" novalidate aria-label="Contact form">
+          <h2 class="h3" style="margin-bottom:22px">Send us a message</h2>
+          <div class="form-grid">
+            <div class="field" data-field="name"><label for="c-name">Name</label><input class="input" id="c-name" name="name" autocomplete="name" required /><span class="error" role="alert"></span></div>
+            <div class="field" data-field="email"><label for="c-email">Email</label><input class="input" id="c-email" name="email" type="email" autocomplete="email" required /><span class="error" role="alert"></span></div>
+            <div class="field full" data-field="topic"><label for="c-topic">Topic</label>
+              <select class="input" id="c-topic" name="topic" required>{topics.map(([v, l]) => (<option value={v}>{l}</option>))}</select><span class="error" role="alert"></span>
+            </div>
+            <div class="field full" data-field="message"><label for="c-msg">Message</label><textarea class="input" id="c-msg" name="message" required placeholder="How can we help?"></textarea><span class="error" role="alert"></span></div>
+            <div class="hp" aria-hidden="true"><label>Leave blank<input name="website" tabindex="-1" autocomplete="off" /></label></div>
+            <div class="full"><button class="btn" type="submit">Send message <span class="arrow" aria-hidden="true">→</span></button></div>
+          </div>
+        </form>
+        <Confirmation title="Message <em>sent!</em>" id="contact-done">
+          <p>Grazie, <b data-o="name"></b>. We’ll get back to you at <b data-o="email"></b> soon.</p>
+          <Fragment slot="actions"><a class="btn" href="/menu">See the menu</a><a class="btn btn--ghost" href="/reservations">Reserve a table</a></Fragment>
+        </Confirmation>
+      </div>
+    </div>
+  </section>
+
+  <section class="mapwrap">
+    <div class="container" data-reveal="scale">
+      <div class="map">
+        <iframe title={`Map showing ${site.name} at ${addressLine}`} src={mapSrc} loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <a class="btn map-btn" href={mapsUrl} target="_blank" rel="noopener">Open in Maps <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { attachForm } from '../scripts/forms';
+  const form = document.getElementById('contact') as HTMLFormElement;
+  const done = document.getElementById('contact-done')!;
+  const topic = new URLSearchParams(location.search).get('topic');
+  const sel = form.elements.namedItem('topic') as HTMLSelectElement;
+  if (topic && Array.from(sel.options).some((o) => o.value === topic)) sel.value = topic;
+
+  attachForm(form, (data) => {
+    // TODO: send `data` to your backend / form service here (see README).
+    done.querySelector('[data-o=name]')!.textContent = data.name.split(' ')[0];
+    done.querySelector('[data-o=email]')!.textContent = data.email;
+    form.hidden = true; done.hidden = false; done.focus();
+  });
+</script>
+
+<style>
+  .cols { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .info { display: grid; gap: 34px; }
+  .item { display: flex; gap: 20px; }
+  .ic { flex: 0 0 52px; height: 52px; border-radius: 50%; background: var(--cream-2); display: grid; place-items: center; font-size: 1.3rem; transition: transform 0.5s var(--ease), background 0.3s; }
+  .item:hover .ic { transform: rotate(-10deg) scale(1.08); background: var(--gold-soft); }
+  .item h2 { margin-bottom: 8px; }
+  .item p { margin: 0; }
+  .status { display: inline-flex !important; gap: 10px; align-items: center; font-weight: 600; margin-bottom: 8px !important; font-size: 0.95rem; }
+  .form-card { background: var(--paper); border-radius: var(--radius-lg); padding: clamp(24px, 4vw, 48px); box-shadow: var(--shadow-lift); position: sticky; top: calc(var(--nav-h) + 20px); }
+  select.input { appearance: none; background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='9' fill='none' stroke='%232f3a2b' stroke-width='2'><path d='M1 1l6 6 6-6'/></svg>"); background-repeat: no-repeat; background-position: right 18px center; padding-right: 44px; }
+  form.shake { animation: shake 0.45s; }
+  @keyframes shake { 20%, 60% { transform: translateX(-6px); } 40%, 80% { transform: translateX(6px); } }
+  .mapwrap { padding-bottom: clamp(72px, 11vw, 150px); }
+  .map { position: relative; border-radius: var(--radius-lg); overflow: hidden; height: clamp(320px, 45vw, 520px); box-shadow: var(--shadow-lift); border: 8px solid var(--paper); background: var(--cream-2); }
+  .map iframe { width: 100%; height: 100%; border: 0; filter: sepia(0.25) saturate(0.85) contrast(0.95); }
+  .map-btn { position: absolute; right: 20px; bottom: 20px; }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr; } .form-card { position: static; } }
+</style>
