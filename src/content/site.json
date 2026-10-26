@@ -39,12 +39,13 @@
   ],
   "photos": {
     "heroPlate": "",
-    "heroFloatA": "",
-    "heroFloatB": "",
+    "heroFloatA": "/images/margherita.webp",
+    "heroFloatB": "/images/meatballs.webp",
+    "heroFloatC": "/images/arrabbiata.webp",
     "storyMain": "",
     "storySecondary": "",
     "dineIn": "",
-    "takeout": "",
+    "takeout": "/images/margherita.webp",
     "privateDining": ""
   },
   "stats": [

@@ -164,6 +164,7 @@ const dietary = Object.entries(menu.dietaryKey);
   @keyframes pop { from { opacity: 0; transform: translateY(18px) scale(0.97); } }
   .thumb { width: 104px; height: 104px; border-radius: 22px; overflow: hidden; box-shadow: var(--shadow-soft); transition: transform 0.6s var(--ease), border-radius 0.6s var(--ease); }
   .item:hover .thumb { transform: rotate(-4deg) scale(1.05); border-radius: 50%; }
+  .thumb :global(img.art) { width: 100%; height: 100%; }
   .line { display: flex; align-items: baseline; gap: 10px; }
   .name { font-size: 1.3rem; letter-spacing: -0.01em; line-height: 1.2; }
   .tags { display: inline-flex; gap: 4px; transform: translateY(-2px); }

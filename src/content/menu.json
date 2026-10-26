@@ -17,7 +17,15 @@
           "price": 16,
           "image": "",
           "tags": ["V", "GF"],
-          "art": { "kind": "burrata", "tone": "gold" },
+          "art": { "kind": "burrata", "tone": "gold" }
+        },
+        {
+          "name": "Baked Ricotta Meatballs",
+          "description": "Tender ricotta meatballs baked in San Marzano sauce, parmigiano, torn basil.",
+          "price": 15,
+          "image": "/images/meatballs.webp",
+          "tags": [],
+          "art": { "kind": "meat", "tone": "terracotta" },
           "featured": true
         },
         {
@@ -65,8 +73,7 @@
           "price": 24,
           "image": "",
           "tags": ["V"],
-          "art": { "kind": "pasta", "tone": "terracotta" },
-          "featured": true
+          "art": { "kind": "pasta", "tone": "terracotta" }
         },
         {
           "name": "Cacio e Pepe, Zippies Style",
@@ -82,24 +89,25 @@
           "price": 27,
           "image": "",
           "tags": [],
-          "art": { "kind": "pasta", "tone": "night" },
-          "featured": true
+          "art": { "kind": "pasta", "tone": "night" }
         },
         {
-          "name": "Spaghetti alle Vongole",
-          "description": "Littleneck clams, white wine, garlic, calabrian chili, parsley.",
+          "name": "Spaghetti all’Arrabbiata",
+          "description": "San Marzano tomato, garlic, calabrian chili and a pile of grilled garlic bread for mopping.",
           "price": 28,
-          "image": "",
+          "image": "/images/arrabbiata.webp",
           "tags": [],
-          "art": { "kind": "pasta", "tone": "olive" }
+          "art": { "kind": "pasta", "tone": "olive" },
+          "featured": true
         },
         {
           "name": "Spaghetti al Pomodoro",
           "description": "San Marzano tomatoes, garlic, basil, olive oil. Simple on purpose.",
           "price": 18,
-          "image": "",
+          "image": "/images/spaghetti-pomodoro.webp",
           "tags": ["V", "VG"],
-          "art": { "kind": "pasta", "tone": "cream" }
+          "art": { "kind": "pasta", "tone": "cream" },
+          "featured": true
         },
         {
           "name": "Wild Mushroom Risotto",
@@ -120,7 +128,7 @@
           "name": "Margherita",
           "description": "San Marzano, fior di latte, basil, extra-virgin olive oil.",
           "price": 18,
-          "image": "",
+          "image": "/images/margherita.webp",
           "tags": ["V"],
           "art": { "kind": "pizza", "tone": "terracotta" },
           "featured": true
@@ -185,8 +193,7 @@
           "price": 11,
           "image": "",
           "tags": ["V"],
-          "art": { "kind": "tiramisu", "tone": "cream" },
-          "featured": true
+          "art": { "kind": "tiramisu", "tone": "cream" }
         },
         {
           "name": "Pistachio Gelato",
@@ -217,8 +224,7 @@
           "price": 14,
           "image": "",
           "tags": ["V", "VG", "GF"],
-          "art": { "kind": "spritz", "tone": "gold" },
-          "featured": true
+          "art": { "kind": "spritz", "tone": "gold" }
         },
         {
           "name": "Negroni Sbagliato",

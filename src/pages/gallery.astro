@@ -78,6 +78,7 @@ import gallery from '../content/gallery.json';
   .open { position: relative; width: 100%; height: 100%; padding: 0; border: 0; border-radius: var(--radius); overflow: hidden; display: block; background: var(--cream-2); }
   .open :global(.art svg) { transition: transform 0.9s var(--ease); }
   .open:hover :global(.art svg), .open:focus-visible :global(.art svg) { transform: scale(1.12) rotate(1.5deg); }
+  .open:hover :global(img.art), .open:focus-visible :global(img.art) { transform: scale(1.08); }
   .cap { position: absolute; inset: auto 0 0 0; padding: 40px 16px 14px; text-align: left; color: #fff; font-size: 0.92rem; font-weight: 500; background: linear-gradient(transparent, rgb(22 28 20 / 0.85)); transform: translateY(100%); transition: transform 0.5s var(--ease); z-index: 3; }
   .open:hover .cap, .open:focus-visible .cap { transform: none; }
   @media (hover: none) { .cap { transform: none; } }

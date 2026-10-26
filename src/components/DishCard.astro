@@ -24,6 +24,8 @@ const { dish } = Astro.props;
   .media { position: relative; aspect-ratio: 4 / 3.4; border-radius: calc(var(--radius-lg) - 8px); overflow: hidden; }
   .media :global(.art svg) { transition: transform 0.9s var(--ease); }
   .dish:hover .media :global(.art svg) { transform: scale(1.1) rotate(2deg); }
+  .media :global(img.art) { transition: transform 0.9s var(--ease); }
+  .dish:hover .media :global(img.art) { transform: scale(1.08); }
   .price { position: absolute; top: 14px; right: 14px; z-index: 2; background: var(--cream); color: var(--olive-900); font-family: var(--font-display); font-size: 1.15rem; padding: 6px 16px; border-radius: 999px; box-shadow: 0 6px 16px -6px rgb(0 0 0 / 0.4); }
   .body { padding: 20px 14px 14px; }
   .tags { display: flex; gap: 6px; min-height: 22px; margin-bottom: 12px; }
