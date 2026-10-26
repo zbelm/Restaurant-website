@@ -14,7 +14,7 @@ import gallery from '../content/gallery.json';
         {gallery.map((g, i) => (
           <li class={`cell ${g.size}`} data-reveal="scale">
             <button type="button" class="open" data-index={i} aria-label={`Open image: ${g.caption}`}>
-              <Art kind={g.kind} tone={g.tone as any} alt={g.caption} />
+              <Art kind={g.kind} tone={g.tone as any} src={g.image || undefined} alt={g.caption} />
               <span class="cap">{g.caption}</span>
             </button>
           </li>

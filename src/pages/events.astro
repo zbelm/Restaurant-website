@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Art from '../components/Art.astro';
 import events from '../content/events.json';
+import site from '../content/site.json';
 
 const perks = [
   { n: '40', l: 'Seated guests' }, { n: '60', l: 'Standing reception' }, { n: '3', l: 'Set menus to choose from' },
@@ -18,7 +19,7 @@ const perks = [
       <div class="e-grid" data-stagger="130">
         {events.map((e) => (
           <article class="ev" data-reveal>
-            <div class="ev-media"><Art kind={e.art.kind} tone={e.art.tone as any} alt={e.title} /></div>
+            <div class="ev-media"><Art kind={e.art.kind} tone={e.art.tone as any} src={e.image || undefined} alt={e.title} /></div>
             <div class="ev-body">
               <p class="when">{e.when} · {e.time}</p>
               <h3 class="h3">{e.title}</h3>
@@ -44,7 +45,7 @@ const perks = [
           <a class="btn btn--light" href="/contact?topic=private-dining#contact-form">Enquire about an event <span class="arrow" aria-hidden="true">→</span></a>
         </div>
       </div>
-      <div class="p-art" data-reveal="scale"><Art kind="interior" tone="night" alt="Warmly lit dining room set for a private event" /></div>
+      <div class="p-art" data-reveal="scale"><Art kind="interior" tone="night" src={site.photos.privateDining || undefined} alt="Warmly lit dining room set for a private event" /></div>
     </div>
   </section>
 

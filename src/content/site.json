@@ -37,6 +37,16 @@
     { "day": "Saturday", "ranges": [{ "label": "Brunch", "open": "10:00", "close": "14:00" }, { "label": "Dinner", "open": "17:00", "close": "23:00" }] },
     { "day": "Sunday", "ranges": [{ "label": "Brunch", "open": "10:00", "close": "14:00" }, { "label": "Dinner", "open": "16:00", "close": "21:00" }] }
   ],
+  "photos": {
+    "heroPlate": "",
+    "heroFloatA": "",
+    "heroFloatB": "",
+    "storyMain": "",
+    "storySecondary": "",
+    "dineIn": "",
+    "takeout": "",
+    "privateDining": ""
+  },
   "stats": [
     { "value": 2019, "label": "Doors opened", "format": "year" },
     { "value": 14, "label": "Hand-rolled pastas" },

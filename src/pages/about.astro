@@ -3,16 +3,13 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Art from '../components/Art.astro';
 import gallery from '../content/gallery.json';
+import team from '../content/team.json';
+import site from '../content/site.json';
 
 const values = [
   { n: '01', title: 'Made by hand', text: 'Pasta is rolled every morning, dough rests for 48 hours, and nothing arrives at your table from a bag or a box.' },
   { n: '02', title: 'Seasonal, always', text: 'We cook what’s good right now from farms within 100 miles. The menu changes when the market does.' },
   { n: '03', title: 'Hospitality first', text: 'Great food is only half of it. We want you to feel like the room was waiting for you specifically.' },
-];
-const team = [
-  { name: 'Lucia Ferraro', role: 'Executive Chef', bio: 'Trained in Bologna, obsessed with ragù. Believes salt is a love language.', art: { kind: 'pasta', tone: 'terracotta' } },
-  { name: 'Marco Bellini', role: 'Head of Pasta & Pizza', bio: 'Our dough whisperer. Has opinions about hydration and will share them.', art: { kind: 'dough', tone: 'gold' } },
-  { name: 'Ava Chen', role: 'Beverage Director', bio: 'Curates our natural wine list and invents spritzes that disappear fast.', art: { kind: 'wine', tone: 'night' } },
 ];
 const timeline = [
   { year: '2017', text: 'A borrowed oven, a rolling pin and a pop-up in a friend’s garage.' },
@@ -55,7 +52,7 @@ const timeline = [
       <div class="t-grid" data-stagger="130">
         {team.map((m) => (
           <article class="member" data-reveal>
-            <div class="avatar"><Art kind={m.art.kind} tone={m.art.tone as any} alt={`Illustration representing ${m.name}`} /></div>
+            <div class="avatar"><Art kind={m.art.kind} tone={m.art.tone as any} src={m.image || undefined} alt={m.image ? `Portrait of ${m.name}` : `Illustration representing ${m.name}`} /></div>
             <h3 class="h3">{m.name}</h3>
             <p class="role">{m.role}</p>
             <p class="muted">{m.bio}</p>
@@ -67,7 +64,7 @@ const timeline = [
 
   <section class="strip" aria-label="A glimpse of Zippies">
     <div class="strip-track">
-      {[...gallery, ...gallery].map((g, i) => (<div class="tile" aria-hidden={i >= gallery.length ? 'true' : undefined}><Art kind={g.kind} tone={g.tone as any} alt={i < gallery.length ? g.caption : ''} /></div>))}
+      {[...gallery, ...gallery].map((g, i) => (<div class="tile" aria-hidden={i >= gallery.length ? 'true' : undefined}><Art kind={g.kind} tone={g.tone as any} src={g.image || undefined} alt={i < gallery.length ? g.caption : ''} /></div>))}
     </div>
   </section>
 

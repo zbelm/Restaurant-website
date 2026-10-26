@@ -1,14 +1,14 @@
 [
-  { "kind": "interior", "tone": "night", "caption": "The dining room, golden hour", "size": "wide" },
-  { "kind": "pasta", "tone": "terracotta", "caption": "Rigatoni alla vodka", "size": "tall" },
-  { "kind": "pizza", "tone": "olive", "caption": "Margherita, straight from the oven", "size": "normal" },
-  { "kind": "spritz", "tone": "gold", "caption": "Our house spritz", "size": "normal" },
-  { "kind": "dough", "tone": "cream", "caption": "Dough, rested for 48 hours", "size": "normal" },
-  { "kind": "tiramisu", "tone": "cream", "caption": "Tiramisu, made daily", "size": "tall" },
-  { "kind": "burrata", "tone": "gold", "caption": "Burrata & charred peaches", "size": "normal" },
-  { "kind": "wine", "tone": "night", "caption": "Natural wine, poured generously", "size": "wide" },
-  { "kind": "meat", "tone": "terracotta", "caption": "Bistecca with rosemary jus", "size": "normal" },
-  { "kind": "focaccia", "tone": "olive", "caption": "Focaccia, still warm", "size": "normal" },
-  { "kind": "gelato", "tone": "olive", "caption": "Pistachio gelato", "size": "normal" },
-  { "kind": "fish", "tone": "olive", "caption": "Pan-roasted branzino", "size": "normal" }
+  { "image": "", "kind": "interior", "tone": "night", "caption": "The dining room, golden hour", "size": "wide" },
+  { "image": "", "kind": "pasta", "tone": "terracotta", "caption": "Rigatoni alla vodka", "size": "tall" },
+  { "image": "", "kind": "pizza", "tone": "olive", "caption": "Margherita, straight from the oven", "size": "normal" },
+  { "image": "", "kind": "spritz", "tone": "gold", "caption": "Our house spritz", "size": "normal" },
+  { "image": "", "kind": "dough", "tone": "cream", "caption": "Dough, rested for 48 hours", "size": "normal" },
+  { "image": "", "kind": "tiramisu", "tone": "cream", "caption": "Tiramisu, made daily", "size": "tall" },
+  { "image": "", "kind": "burrata", "tone": "gold", "caption": "Burrata & charred peaches", "size": "normal" },
+  { "image": "", "kind": "wine", "tone": "night", "caption": "Natural wine, poured generously", "size": "wide" },
+  { "image": "", "kind": "meat", "tone": "terracotta", "caption": "Bistecca with rosemary jus", "size": "normal" },
+  { "image": "", "kind": "focaccia", "tone": "olive", "caption": "Focaccia, still warm", "size": "normal" },
+  { "image": "", "kind": "gelato", "tone": "olive", "caption": "Pistachio gelato", "size": "normal" },
+  { "image": "", "kind": "fish", "tone": "olive", "caption": "Pan-roasted branzino", "size": "normal" }
 ]

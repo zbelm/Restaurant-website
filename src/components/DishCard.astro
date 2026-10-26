@@ -7,7 +7,7 @@ const { dish } = Astro.props;
 
 <div class="dish-wrap" data-reveal><article class="dish tilt">
   <div class="media">
-    <Art kind={dish.art.kind} tone={dish.art.tone} alt={dish.name} />
+    <Art kind={dish.art.kind} tone={dish.art.tone} src={dish.image || undefined} alt={dish.name} />
     <span class="price">{price(dish.price)}</span>
   </div>
   <div class="body">

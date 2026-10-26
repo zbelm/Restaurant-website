@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Lucia Ferraro",
+    "role": "Executive Chef",
+    "bio": "Trained in Bologna, obsessed with ragù. Believes salt is a love language.",
+    "image": "",
+    "art": {
+      "kind": "pasta",
+      "tone": "terracotta"
+    }
+  },
+  {
+    "name": "Marco Bellini",
+    "role": "Head of Pasta & Pizza",
+    "bio": "Our dough whisperer. Has opinions about hydration and will share them.",
+    "image": "",
+    "art": {
+      "kind": "dough",
+      "tone": "gold"
+    }
+  },
+  {
+    "name": "Ava Chen",
+    "role": "Beverage Director",
+    "bio": "Curates our natural wine list and invents spritzes that disappear fast.",
+    "image": "",
+    "art": {
+      "kind": "wine",
+      "tone": "night"
+    }
+  }
+]

@@ -36,10 +36,10 @@ const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.0
           </svg>
         </div>
         <div class="plate" data-reveal="scale" style="--d: 300ms" data-mouse="18">
-          <div class="plate-in"><Art kind="pasta" tone="terracotta" eager /></div>
+          <div class="plate-in"><Art kind="pasta" tone="terracotta" src={site.photos.heroPlate || undefined} alt="" eager /></div>
         </div>
-        <div class="float f1" data-mouse="38"><Art kind="burrata" tone="gold" eager /></div>
-        <div class="float f2" data-mouse="-30"><Art kind="spritz" tone="olive" eager /></div>
+        <div class="float f1" data-mouse="38"><Art kind="burrata" tone="gold" src={site.photos.heroFloatA || undefined} alt="" eager /></div>
+        <div class="float f2" data-mouse="-30"><Art kind="spritz" tone="olive" src={site.photos.heroFloatB || undefined} alt="" eager /></div>
         <div class="badge" data-mouse="-14"><span>Chef’s<br />pick</span><strong>$24</strong></div>
       </div>
     </div>
@@ -60,8 +60,8 @@ const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.0
   <section class="section story">
     <div class="container story-grid">
       <div class="collage" data-reveal="left">
-        <div class="arch a1" data-parallax="0.06"><Art kind="dough" tone="gold" /></div>
-        <div class="arch a2" data-parallax="-0.05"><Art kind="interior" tone="night" /></div>
+        <div class="arch a1" data-parallax="0.06"><Art kind="dough" tone="gold" src={site.photos.storyMain || undefined} alt="" /></div>
+        <div class="arch a2" data-parallax="-0.05"><Art kind="interior" tone="night" src={site.photos.storySecondary || undefined} alt="" /></div>
         <div class="stamp" aria-hidden="true"><span>Since<br /><b>2019</b></span></div>
       </div>
       <div class="story-copy">
@@ -102,7 +102,7 @@ const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.0
   <section class="section--tight dual">
     <div class="container dual-grid">
       <a class="panel dine on-dark" href="/reservations" data-reveal="left">
-        <Art class="bg" kind="interior" tone="night" />
+        <Art class="bg" kind="interior" tone="night" src={site.photos.dineIn || undefined} alt="" />
         <div class="panel-copy">
           <p class="eyebrow">Dine in</p>
           <h3 class="h2">Save your <em>seat.</em></h3>
@@ -111,7 +111,7 @@ const mapSrc = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.0
         </div>
       </a>
       <a class="panel takeout" href={site.links.order} target="_blank" rel="noopener" data-reveal="right">
-        <Art class="bg" kind="pizza" tone="terracotta" />
+        <Art class="bg" kind="pizza" tone="terracotta" src={site.photos.takeout || undefined} alt="" />
         <div class="panel-copy on-dark">
           <p class="eyebrow">Pickup &amp; delivery</p>
           <h3 class="h2">Zippies, <em>at home.</em></h3>

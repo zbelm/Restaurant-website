@@ -15,6 +15,7 @@
           "name": "Burrata & Charred Peaches",
           "description": "Creamy burrata, grilled peach, basil oil, pistachio crumble, wildflower honey.",
           "price": 16,
+          "image": "",
           "tags": ["V", "GF"],
           "art": { "kind": "burrata", "tone": "gold" },
           "featured": true
@@ -23,6 +24,7 @@
           "name": "Zippies Focaccia",
           "description": "Baked daily with rosemary and sea salt, served with whipped ricotta.",
           "price": 9,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "focaccia", "tone": "terracotta" }
         },
@@ -30,6 +32,7 @@
           "name": "Crispy Artichokes",
           "description": "Fried baby artichokes, lemon, caper aioli, parsley.",
           "price": 13,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "salad", "tone": "olive" }
         },
@@ -37,6 +40,7 @@
           "name": "Beef Carpaccio",
           "description": "Thin-sliced beef, arugula, shaved parmigiano, cracked pepper, good olive oil.",
           "price": 17,
+          "image": "",
           "tags": ["GF"],
           "art": { "kind": "meat", "tone": "night" }
         },
@@ -44,6 +48,7 @@
           "name": "Little Gem & Pecorino",
           "description": "Crisp little gem, pecorino, toasted breadcrumbs, lemon-anchovy dressing.",
           "price": 12,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "salad", "tone": "cream" }
         }
@@ -58,6 +63,7 @@
           "name": "Rigatoni alla Vodka",
           "description": "Blush tomato cream, calabrian chili, basil, stracciatella.",
           "price": 24,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "pasta", "tone": "terracotta" },
           "featured": true
@@ -66,6 +72,7 @@
           "name": "Cacio e Pepe, Zippies Style",
           "description": "Tonnarelli, pecorino romano, black pepper, brown-butter breadcrumbs.",
           "price": 22,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "pasta", "tone": "gold" }
         },
@@ -73,6 +80,7 @@
           "name": "Pappardelle al Ragù",
           "description": "Eight-hour short rib ragù, parmigiano reggiano, fresh herbs.",
           "price": 27,
+          "image": "",
           "tags": [],
           "art": { "kind": "pasta", "tone": "night" },
           "featured": true
@@ -81,6 +89,7 @@
           "name": "Spaghetti alle Vongole",
           "description": "Littleneck clams, white wine, garlic, calabrian chili, parsley.",
           "price": 28,
+          "image": "",
           "tags": [],
           "art": { "kind": "pasta", "tone": "olive" }
         },
@@ -88,6 +97,7 @@
           "name": "Spaghetti al Pomodoro",
           "description": "San Marzano tomatoes, garlic, basil, olive oil. Simple on purpose.",
           "price": 18,
+          "image": "",
           "tags": ["V", "VG"],
           "art": { "kind": "pasta", "tone": "cream" }
         },
@@ -95,6 +105,7 @@
           "name": "Wild Mushroom Risotto",
           "description": "Carnaroli rice, porcini, thyme, truffle butter, aged parmigiano.",
           "price": 25,
+          "image": "",
           "tags": ["V", "GF"],
           "art": { "kind": "risotto", "tone": "gold" }
         }
@@ -109,6 +120,7 @@
           "name": "Margherita",
           "description": "San Marzano, fior di latte, basil, extra-virgin olive oil.",
           "price": 18,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "pizza", "tone": "terracotta" },
           "featured": true
@@ -117,6 +129,7 @@
           "name": "Hot Honey Soppressata",
           "description": "Spicy soppressata, mozzarella, chili honey, oregano.",
           "price": 21,
+          "image": "",
           "tags": [],
           "art": { "kind": "pizza", "tone": "night" }
         },
@@ -124,6 +137,7 @@
           "name": "Wild Mushroom & Taleggio",
           "description": "Roasted mushrooms, taleggio, thyme, garlic cream, no tomato.",
           "price": 20,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "pizza", "tone": "olive" }
         }
@@ -138,6 +152,7 @@
           "name": "Pan-Roasted Branzino",
           "description": "Salmoriglio, shaved fennel, blistered tomatoes, charred lemon.",
           "price": 34,
+          "image": "",
           "tags": ["GF"],
           "art": { "kind": "fish", "tone": "olive" }
         },
@@ -145,6 +160,7 @@
           "name": "Bistecca",
           "description": "12 oz NY strip, rosemary jus, crispy potatoes, salsa verde.",
           "price": 42,
+          "image": "",
           "tags": ["GF"],
           "art": { "kind": "meat", "tone": "terracotta" }
         },
@@ -152,6 +168,7 @@
           "name": "Pollo al Mattone",
           "description": "Brick-pressed half chicken, lemon, garlic, bitter greens.",
           "price": 29,
+          "image": "",
           "tags": ["GF"],
           "art": { "kind": "meat", "tone": "gold" }
         }
@@ -166,6 +183,7 @@
           "name": "Tiramisu",
           "description": "Espresso-soaked savoiardi, mascarpone cream, cocoa, a little amaro.",
           "price": 11,
+          "image": "",
           "tags": ["V"],
           "art": { "kind": "tiramisu", "tone": "cream" },
           "featured": true
@@ -174,6 +192,7 @@
           "name": "Pistachio Gelato",
           "description": "Three scoops of house-churned Sicilian pistachio, sea salt.",
           "price": 9,
+          "image": "",
           "tags": ["V", "GF"],
           "art": { "kind": "gelato", "tone": "olive" }
         },
@@ -181,6 +200,7 @@
           "name": "Affogato",
           "description": "Vanilla gelato drowned in a double espresso. Add amaretto for $4.",
           "price": 9,
+          "image": "",
           "tags": ["V", "GF"],
           "art": { "kind": "espresso", "tone": "night" }
         }
@@ -195,6 +215,7 @@
           "name": "Zippies Spritz",
           "description": "Aperol, prosecco, blood orange, soda, a very big ice cube.",
           "price": 14,
+          "image": "",
           "tags": ["V", "VG", "GF"],
           "art": { "kind": "spritz", "tone": "gold" },
           "featured": true
@@ -203,6 +224,7 @@
           "name": "Negroni Sbagliato",
           "description": "Campari, sweet vermouth, prosecco, orange peel.",
           "price": 15,
+          "image": "",
           "tags": ["V", "VG", "GF"],
           "art": { "kind": "spritz", "tone": "terracotta" }
         },
@@ -210,6 +232,7 @@
           "name": "Espresso Martini",
           "description": "Vodka, espresso, coffee liqueur, three beans for luck.",
           "price": 15,
+          "image": "",
           "tags": ["V", "VG", "GF"],
           "art": { "kind": "espresso", "tone": "night" }
         },
@@ -217,6 +240,7 @@
           "name": "Wine by the Glass",
           "description": "Montepulciano, Vermentino or Prosecco. Ask what we're pouring today.",
           "price": 12,
+          "image": "",
           "tags": ["V", "VG", "GF"],
           "art": { "kind": "wine", "tone": "night" }
         },
@@ -224,6 +248,7 @@
           "name": "Blood Orange Soda",
           "description": "House blood orange shrub, soda, rosemary. Zero-proof.",
           "price": 7,
+          "image": "",
           "tags": ["V", "VG", "GF"],
           "art": { "kind": "spritz", "tone": "olive" }
         },
@@ -231,6 +256,7 @@
           "name": "Espresso & Cappuccino",
           "description": "Locally roasted beans, pulled properly.",
           "price": 4,
+          "image": "",
           "tags": ["V", "GF"],
           "art": { "kind": "espresso", "tone": "cream" }
         }

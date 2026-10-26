@@ -59,11 +59,20 @@ Tags: `V` vegetarian, `VG` vegan (also add `V`), `GF` gluten-free.
 
 ## Using real photos
 
-The site ships with illustrated placeholders (`src/components/Art.astro`) instead of stock photos. To use your own:
+Every image slot has an `"image"` field that is empty by default, which shows an illustrated placeholder. To use a real photo:
 
-1. Put images in `public/images/` (e.g. `public/images/rigatoni.jpg`).
-2. Add an `"image": "/images/rigatoni.jpg"` field to the item in its JSON file, then in `DishCard.astro`, `menu.astro`, `gallery.astro` etc. change `<Art kind=… />` to `<Art src={dish.image} alt={dish.name} kind=… />`. When `src` is set the illustration is skipped and a lazy-loaded `<img>` is rendered.
-3. Replace `public/og.png` (1200×630) with your own social-share image.
+1. Put the file in `public/images/` (JPG/WebP, ~1600px wide, under 300 KB).
+2. Set the field to its path, e.g. `"image": "/images/rigatoni.jpg"`. Nothing else to change; the photo replaces the illustration and is lazy-loaded.
+
+| Where | File → field |
+| --- | --- |
+| Each menu dish (menu page + home favorites) | `src/content/menu.json` → `image` |
+| Gallery tiles (also the About page photo strip) | `src/content/gallery.json` → `image` |
+| Events cards | `src/content/events.json` → `image` |
+| Team portraits | `src/content/team.json` → `image` |
+| Home hero plate + two floating dishes, story collage, dine-in / takeout panels, private-dining photo | `src/content/site.json` → `photos.*` |
+
+Photos are cropped to fit (circles in the hero, arches in the story section, rectangles elsewhere), so keep the subject centered. Replace `public/og.png` (1200×630) with your own share image too.
 
 ## Brand tweaks
 

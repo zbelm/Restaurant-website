@@ -47,7 +47,7 @@ const dietary = Object.entries(menu.dietaryKey);
           <ul class="items" data-stagger="60">
             {c.items.map((d: any) => (
               <li class="item" data-tags={d.tags.join(' ')} data-reveal>
-                <div class="thumb"><Art kind={d.art.kind} tone={d.art.tone} alt={d.name} /></div>
+                <div class="thumb"><Art kind={d.art.kind} tone={d.art.tone} src={d.image || undefined} alt={d.name} /></div>
                 <div class="info">
                   <div class="line">
                     <h3 class="name">{d.name}</h3>

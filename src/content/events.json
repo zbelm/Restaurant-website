@@ -1,6 +1,7 @@
 [
   {
     "title": "Pasta Night School",
+    "image": "",
     "when": "First Wednesday of every month",
     "time": "6:30 pm",
     "price": "$85 per person",
@@ -9,6 +10,7 @@
   },
   {
     "title": "Natural Wine Wednesdays",
+    "image": "",
     "when": "Every Wednesday",
     "time": "From 5 pm",
     "price": "Half-price bottles",
@@ -17,6 +19,7 @@
   },
   {
     "title": "Weekend Brunch",
+    "image": "",
     "when": "Saturday & Sunday",
     "time": "10 am – 2 pm",
     "price": "A la carte",
